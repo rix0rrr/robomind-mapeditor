@@ -8,30 +8,86 @@
         <link rel="stylesheet" href="robomind-mapeditor.css">
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+        <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">RoboMindMap</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Edit</a></li>
-                <li><a href="#">Load</a></li>
-                <li><a href="#">Save</a></li>
+                <li data-bind="css: { active: page() == 'edit' }"><a href="#" data-bind="click: toEdit">Edit</a></li>
+                <li data-bind="css: { active: page() == 'load' }"><a href="#" data-bind="click: toLoad">Load</a></li>
+                <li data-bind="css: { active: page() == 'save' }"><a href="#" data-bind="click: toSave">Save</a></li>
             </ul>
         </nav>
 
-        <button class="btn btn-warning" data-bind="click: editor.zoomIn">+</button>
-        <button class="btn btn-warning" data-bind="click: editor.zoomOut">-</button>
+        <!-- Edit Screen -->
+        <div data-bind="visible: page() == 'edit'">
+            <button class="btn btn-warning" data-bind="click: editor.zoomIn">+</button>
+            <button class="btn btn-warning" data-bind="click: editor.zoomOut">-</button>
 
-        <br>
+            <br>
 
-        <div class="editor" data-bind="attr: { style: editor.cssStyle }, foreach: editor.mapTiles">
-            <div data-bind="attr: { style: cssStyle }"></div>
+            <div class="editor" data-bind="attr: { style: editor.cssStyle }, foreach: editor.mapTiles">
+                <div data-bind="attr: { style: cssStyle }"></div>
+            </div>
+
+            <div class="palette">
+                <h2>Terrain</h2>
+                <div data-bind="foreach: palette.toolsMenu">
+                    <div class="tool" data-bind="attr: { style: cssStyle }, click: select, css: { selected: selected }"></div>
+                </div>
+            </div>
         </div>
 
-        <div class="palette">
-            <h2>Terrain</h2>
-            <div data-bind="foreach: palette.toolsMenu">
-                <div class="tool" data-bind="attr: { style: cssStyle }, click: select, css: { selected: selected }"></div>
+        <!-- Load Screen -->
+        <div data-bind="visible: page() == 'load'" class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-column">
+                    <h2>Load</h2>
+
+                    <p>Select a RoboMind <tt>.map</tt> file to load, or
+                    copy and paste the contents of a <tt>.map</tt> into
+                    the text box.</p>
+
+                    <h3>From File</h3>
+
+                    <div data-bind="if: mapFile.fileApisAvailable">
+                        <form role="form" data-bind="submit: mapFile.loadFromFile">
+                            <div class="form-group">
+                                <input type="file" id="loadMapFile">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Load">
+                            </div>
+                        </form>
+                    </div>
+                    <div data-bind="ifnot: mapFile.fileApisAvailable">
+                        <p>Unfortunately, your browser does support the HTML5 
+                        File API. Please copy and paste the contents of your <tt>.map</tt>
+                        file manually into the text box below.</p>
+                    </div>
+
+                    <h3>From Text</h3>
+
+                    <p>Copy the contents of the .map file here:</p>
+
+                    <form role="form" data-bind="submit: mapFile.loadFromText">
+                        <div class="form-group">
+                            <textarea data-bind="value: mapFile.textArea" id="loadMapText" class="form-control" rows="8"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Load">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Screen -->
+        <div data-bind="visible: page() == 'save'" class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-column">
+                    <h2>Save</h2>
+                </div>
             </div>
         </div>
 
@@ -47,6 +103,7 @@
         <!-- App -->
         <script src="Palette.js"></script>
         <script src="Map.js"></script>
+        <script src="MapFile.js"></script>
         <script src="MapTile.js"></script>
         <script src="Editor.js"></script>
         <script src="App.js"></script>

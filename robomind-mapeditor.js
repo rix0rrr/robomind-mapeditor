@@ -23,4 +23,6 @@ $(function() {
     app.palette.addTool(new Tool('tile-R'));
 
     ko.applyBindings(app);
+
+    app.mapFile.setFileControl(document.getElementById('loadMapFile'));
 });
