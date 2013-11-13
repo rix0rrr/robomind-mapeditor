@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"> 
+        <title>RoboMind Map Editor</title>
+
+        <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css">
+        <link rel="stylesheet" href="robomind-mapeditor.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">RoboMindMap</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Edit</a></li>
+                <li><a href="#">Load</a></li>
+                <li><a href="#">Save</a></li>
+            </ul>
+        </nav>
+
+        <button class="btn btn-warning" data-bind="click: editor.zoomIn">+</button>
+        <button class="btn btn-warning" data-bind="click: editor.zoomOut">-</button>
+
+        <br>
+
+        <div class="editor" data-bind="attr: { style: editor.cssStyle }, foreach: editor.mapTiles">
+            <div data-bind="attr: { style: cssStyle }"></div>
+        </div>
+
+        <div class="palette">
+            <h2>Terrain</h2>
+            <div data-bind="foreach: palette.toolsMenu">
+                <div class="tool" data-bind="attr: { style: cssStyle }, click: select, css: { selected: selected }"></div>
+            </div>
+        </div>
+
+        <!-- Libs -->
+        <script src="bower_components/jquery/jquery.min.js"></script>
+        <script src="bower_components/knockout.js/knockout.js"></script>
+        <script src="bower_components/underscore/underscore-min.js"></script>
+        <script src="bower_components/json2/json2.js"></script>
+        <script src="bower_components/base64/base64.min.js"></script>
+        <script src="bower_components/LZMA-JS/src/lzma_worker.js"></script>
+        <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
+        <script src="bower_components/sylvester/sylvester.js"></script>
+        <!-- App -->
+        <script src="Palette.js"></script>
+        <script src="Map.js"></script>
+        <script src="MapTile.js"></script>
+        <script src="Editor.js"></script>
+        <script src="App.js"></script>
+        <script src="Tool.js"></script>
+        <script src="util.js"></script>
+        <script src="robomind-mapeditor.js"></script>
+    </body>
+</html>

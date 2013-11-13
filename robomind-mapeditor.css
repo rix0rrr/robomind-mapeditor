@@ -1,0 +1,30 @@
+body {
+    background: black url(images/wild_oliva.png);
+}
+
+.editor {
+    width: 600px;
+    height: 600px;
+    float: left;
+
+    /* These are necessary for the editor to function properly */
+    position: relative;
+    overflow: hidden;
+}
+
+.palette {
+    width: 300px;
+    float: left;
+    overflow: auto;
+}
+
+.palette .tool {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: solid 2px transparent;
+}
+
+.palette .tool.selected {
+    border-color: red;
+}

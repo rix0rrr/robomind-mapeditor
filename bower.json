@@ -1,0 +1,26 @@
+{
+  "name": "robomind-mapeditor",
+  "version": "0.0.1",
+  "authors": [
+      "Rico Huijbers <rix0rrr@gmail.com>"
+  ],
+  "description": "Map editor for the RoboMind programming language",
+  "private": true,
+  "ignore": [
+      "**/.*",
+      "node_modules",
+      "bower_components",
+      "test",
+      "tests"
+  ],
+  "dependencies": {
+      "jquery": "2.x.x",
+      "knockout.js": "2.x.x",
+      "bootstrap-css": "3.x.x",
+      "underscore": "1.x.x",
+      "json2" : "*",
+      "base64": "0.2.x",
+      "LZMA-JS": "1.2.x",
+      "sylvester": "0.1.x"
+  }
+}
