@@ -18,8 +18,8 @@ function MapFile(map, palette) {
 
         var capturing = false;
         _(lines).each(function(line) {
-            line = line.trim();
-            if (line.match(/^#/))
+            line = line.trimRight();
+            if (line.trim().match(/^#/))
                 /* skip */;
             else if (line.match(/:$/))
                 capturing = line == name + ':';
