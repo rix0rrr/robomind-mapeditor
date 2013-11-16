@@ -1,7 +1,7 @@
 EDITOR
     - Zoom in the middle of the map
-    - Drag to pan/paint
     - Extra layers/paint
+    - Translucent tool preview 
 
 I/O
     - Save/load RoboMind maps

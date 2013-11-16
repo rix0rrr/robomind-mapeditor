@@ -5,11 +5,14 @@ body {
 h2 { color: #E6BF27; }
 h3 { color: #A6E067; }
 
+.editor-position {
+    width: auto;
+    float: left;
+}
+
 .editor {
     width: 600px;
     height: 600px;
-    float: left;
-
     /* These are necessary for the editor to function properly */
     position: relative;
     overflow: hidden;
@@ -18,10 +21,11 @@ h3 { color: #A6E067; }
 .action-paint { cursor: crosshair; }
 .action-pan { cursor: move; }
 
-.palette {
+.palette-position {
     width: 300px;
     float: left;
     overflow: auto;
+    margin: 0px 20px;
 }
 
 .palette .tool {
@@ -58,4 +62,8 @@ h3 { color: #A6E067; }
 .panel-heading {
     border-bottom: solid 1px #595757;
     background: #383737;
+}
+
+.panel-fitting {
+    padding: 0px;
 }

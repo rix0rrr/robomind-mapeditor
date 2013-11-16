@@ -16,7 +16,7 @@ function App() {
     self.map     = new Map();
     self.palette = new Palette(self.skin);
     self.editor  = new Editor(self.map, self.palette, self.skin);
-    self.mapFile = new MapFile();
+    self.mapFile = new MapFile(self.map, self.palette);
 
     var mouseActions = {
         paint: new PaintAction(self.palette, self.map, self.editor),
@@ -46,6 +46,10 @@ function App() {
     }).mouseup(function(e) {
         if (!currentAction) return;
         currentAction = null;
+    });
+
+    $(self.mapFile).on('loaded', function() {
+        self.toEdit();
     });
 
     self.toEdit = function() { self.page('edit'); }

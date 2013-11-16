@@ -5,7 +5,7 @@ function Editor(map, palette, skin) {
     var nativeBgSize   = 512;
     var extraBackgroundZoom = 2;
 
-    self.zoomFactor = ko.observable(0.25);
+    self.zoomFactor = ko.observable(0.15);
     self.topLeft    = ko.observable($V([0, 0])); // After scaling
 
     self.cssStyle = ko.computed(function() {

@@ -26,4 +26,8 @@ function Palette(skin) {
     self.addTool = function(tool) {
         self.tools.push(tool);
     }
+
+    self.getTool = function(id) {
+        return _(self.tools()).findWhere({ id: id });
+    }
 }

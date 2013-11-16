@@ -29,4 +29,8 @@ function Map() {
         self.tiles.push(newTile);
         sortTiles();
     }
+
+    self.clear = function() {
+        self.tiles([]);
+    }
 }

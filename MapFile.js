@@ -1,7 +1,7 @@
 /**
  * .map file loader and writer
  */
-function MapFile() {
+function MapFile(map, palette) {
     var self = this;
 
     self.fileApisAvailable = ko.observable(window.File && window.FileReader);
@@ -10,7 +10,39 @@ function MapFile() {
         self.fileControl = fileControl;
     }
 
+    /**
+     * Return the section starting with 'name:' from the set of lines
+     */
+    var getSection = function(lines, name) {
+        var ret = [];
+
+        var capturing = false;
+        _(lines).each(function(line) {
+            line = line.trim();
+            if (line.match(/^#/))
+                /* skip */;
+            else if (line.match(/:$/))
+                capturing = line == name + ':';
+            else if (capturing)
+                ret.push(line);
+        });
+
+        return ret;
+    }
+
     self.load = function(text) {
+        var lines = text.split('\n');
+
+        map.clear();
+        var mapLines = getSection(lines, 'map');
+        _(mapLines).each(function(line, y) {
+            _(line).each(function(c, x) {
+                var tool = palette.getTool('tile-' + c);
+                if (tool) tool.click(map, $V([ x, y ]));
+            });
+        });
+
+        $(self).trigger('loaded');
     }
 
     self.loadFromFile = function() {
@@ -29,6 +61,10 @@ function MapFile() {
 
     self.textArea = ko.observable('');
     self.loadFromText = function() {
-        self.load(self.textArea());
+        if (self.textArea().trim()) {
+            self.load(self.textArea().trim());
+            self.textArea('');
+        } else
+            alert('Copy and paste the contents of a .map file here');
     }
 }
