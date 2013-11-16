@@ -15,7 +15,7 @@
   ],
   "dependencies": {
       "jquery": "2.x.x",
-      "knockout.js": "2.x.x",
+      "knockout.js": "3.x.x",
       "bootstrap-css": "3.x.x",
       "underscore": "1.x.x",
       "json2" : "*",
