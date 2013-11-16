@@ -5,6 +5,10 @@ function Tool(id, shadow) {
     self.shadow = shadow;
 
     self.click = function(map, loc) {
-        map.addOrReplaceTile(new MapTile(loc, self.id, shadow ? 225 : 200));
+        map.addOrReplaceTile(self.toTile(map, loc));
+    }
+
+    self.toTile = function(map, loc) {
+        return new MapTile(loc, self.id, shadow ? 225 : 200);
     }
 }

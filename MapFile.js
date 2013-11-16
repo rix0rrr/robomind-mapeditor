@@ -33,14 +33,15 @@ function MapFile(map, palette) {
     self.load = function(text) {
         var lines = text.split('\n');
 
-        map.clear();
+        var newTiles = [];
         var mapLines = getSection(lines, 'map');
         _(mapLines).each(function(line, y) {
             _(line).each(function(c, x) {
                 var tool = palette.getTool('tile-' + c);
-                if (tool) tool.click(map, $V([ x, y ]));
+                if (tool) newTiles.push(tool.toTile(map, $V([ x, y ])));
             });
         });
+        map.replaceTiles(newTiles);
 
         $(self).trigger('loaded');
     }

@@ -3,6 +3,7 @@ function Palette(skin) {
 
     self.tools = ko.observableArray();
     self.selectedTool = ko.observable();
+    var toolIndex = {};
 
     var size = 50;
 
@@ -24,10 +25,11 @@ function Palette(skin) {
     });
 
     self.addTool = function(tool) {
+        toolIndex[tool.id] = tool;
         self.tools.push(tool);
     }
 
     self.getTool = function(id) {
-        return _(self.tools()).findWhere({ id: id });
+        return toolIndex[id];
     }
 }

@@ -9,7 +9,7 @@ function Map() {
      */
     var sortTiles = function(tiles) {
         // Sort first by row, then by column
-        self.tiles.sort(function(a, b) {
+        tiles.sort(function(a, b) {
             var d_layer = a.layer - b.layer;
             var d_row   = a.loc.e(2) - b.loc.e(2);
             var d_col   = a.loc.e(1) - b.loc.e(1);
@@ -27,10 +27,11 @@ function Map() {
 
         if (existing) self.tiles.remove(existing);
         self.tiles.push(newTile);
-        sortTiles();
+        sortTiles(self.tiles);
     }
 
-    self.clear = function() {
-        self.tiles([]);
+    self.replaceTiles = function(tiles) {
+        sortTiles(tiles);
+        self.tiles(tiles);
     }
 }
