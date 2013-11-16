@@ -11,7 +11,8 @@ function Editor(map, palette, skin) {
     self.cssStyle = ko.computed(function() {
         return mkCss({
             background: skin.file('bg.png'),
-            'background-size': (nativeBgSize * self.zoomFactor() * extraBackgroundZoom) + 'px'
+            'background-size': (nativeBgSize * self.zoomFactor() * extraBackgroundZoom) + 'px',
+            'background-position': -self.topLeft().e(1) + 'px ' + -self.topLeft().e(2) + 'px'
         });
     });
 

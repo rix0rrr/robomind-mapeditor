@@ -8,27 +8,95 @@ function App() {
         return 'url(skins/' + self.skin() + '/' + filename + ')';
     }
 
+    self.leftMouseFunction  = ko.observable('paint');
+    self.rightMouseFunction = ko.computed(function() {
+        return self.leftMouseFunction() == 'paint' ? 'pan' : 'paint';
+    });
+
     self.map     = new Map();
     self.palette = new Palette(self.skin);
     self.editor  = new Editor(self.map, self.palette, self.skin);
     self.mapFile = new MapFile();
 
-    // Apply the current tool to the location clicked in the editor
-    $('.editor').click(function(e) {
-        var tool = self.palette.selectedTool();
-        if (!tool) return;
+    var mouseActions = {
+        paint: new PaintAction(self.palette, self.map, self.editor),
+        pan: new PanAction(self.editor)
+    };
 
-        var pixelLoc = $V([
-            e.pageX - $(this).offset().left,
-            e.pageY - $(this).offset().top
-            ]);
+    var mouseLocation = function(e) {
+        var ofs = $('.editor').offset();
+        return $V([ e.pageX - ofs.left, e.pageY - ofs.top ]);
+    }
 
-        var tileLoc = self.editor.pixelToTile(pixelLoc);
+    var currentAction;
 
-        tool.click(self.map, tileLoc);
+    $('.editor').mousedown(function(e) {
+        var mouseAction = e.which == 1 ? self.leftMouseFunction() : self.rightMouseFunction();
+        currentAction = mouseActions[mouseAction];
+
+        currentAction.mouseDown(mouseLocation(e));
+
+        e.preventDefault();
+        return false;
+    });
+
+    $(document.body).mousemove(function(e) {
+        if (!currentAction) return;
+        currentAction.mouseMove(mouseLocation(e));
+    }).mouseup(function(e) {
+        if (!currentAction) return;
+        currentAction = null;
     });
 
     self.toEdit = function() { self.page('edit'); }
     self.toLoad = function() { self.page('load'); }
     self.toSave = function() { self.page('save'); }
+
+    self.paint = function() {
+        self.leftMouseFunction('paint');
+    }
+
+    self.pan = function() {
+        self.leftMouseFunction('pan');
+    }
+}
+
+/**
+ * Paint using the tool from the palette
+ */
+function PaintAction(palette, map, editor) {
+    this.mouseDown = function(loc) {
+        var tool = palette.selectedTool();
+        if (!tool) return;
+
+        var tileLoc = editor.pixelToTile(loc);
+
+        tool.click(map, tileLoc);
+    }
+
+    this.mouseMove = function(loc) {
+        var tool = palette.selectedTool();
+        if (!tool) return;
+
+        var tileLoc = editor.pixelToTile(loc);
+
+        tool.click(map, tileLoc);
+    }
+}
+
+/**
+ * Pan the map in the editor
+ */
+function PanAction(editor) {
+    var startLoc;
+    var startOrigin;
+
+    this.mouseDown = function(loc) {
+        startLoc    = loc;
+        startOrigin = editor.topLeft();
+    }
+
+    this.mouseMove = function(loc) {
+        editor.topLeft(startOrigin.subtract( loc.subtract(startLoc) ));
+    }
 }

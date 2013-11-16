@@ -21,19 +21,30 @@
 
         <!-- Edit Screen -->
         <div data-bind="visible: page() == 'edit'">
-            <button class="btn btn-warning" data-bind="click: editor.zoomIn">+</button>
-            <button class="btn btn-warning" data-bind="click: editor.zoomOut">-</button>
-
-            <br>
-
-            <div class="editor" data-bind="attr: { style: editor.cssStyle }, foreach: editor.mapTiles">
+            <div class="editor" data-bind="attr: { style: editor.cssStyle }, css: { 'action-paint': leftMouseFunction() == 'paint', 'action-pan': leftMouseFunction() == 'pan' }, foreach: editor.mapTiles">
                 <div data-bind="attr: { style: cssStyle }"></div>
             </div>
 
             <div class="palette">
-                <h2>Terrain</h2>
-                <div data-bind="foreach: palette.toolsMenu">
-                    <div class="tool" data-bind="attr: { style: cssStyle }, click: select, css: { selected: selected }"></div>
+                <div class="btn-group-vertical btn-group-lg">
+                    <button class="btn btn-default" data-bind="click: editor.zoomIn"><span class="glyphicon glyphicon-zoom-in"></span></button>
+                    <button class="btn btn-default" data-bind="click: editor.zoomOut"><span class="glyphicon glyphicon-zoom-out"></span></button>
+                </div>
+
+                <div class="btn-group-vertical btn-group-lg">
+                    <button class="btn btn-primary" data-bind="click: paint, css: { active: leftMouseFunction() == 'paint' }"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button class="btn btn-primary" data-bind="click: pan, css: { active: leftMouseFunction() == 'pan' }"><span class="glyphicon glyphicon-move"></span></button>
+                </div>
+
+                <br>
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Terrain</h2>
+                    </div>
+                    <div class="panel-body" data-bind="foreach: palette.toolsMenu">
+                        <div class="tool" data-bind="attr: { style: cssStyle }, click: select, css: { selected: selected }"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,7 +53,7 @@
         <div data-bind="visible: page() == 'load'" class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-column">
-                    <h2>Load</h2>
+                    <h2><span class="glyphicon glyphicon-cloud-upload"></span> Load</h2>
 
                     <p>Select a RoboMind <tt>.map</tt> file to load, or
                     copy and paste the contents of a <tt>.map</tt> into
@@ -86,7 +97,7 @@
         <div data-bind="visible: page() == 'save'" class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-column">
-                    <h2>Save</h2>
+                    <h2><span class="glyphicon glyphicon-cloud-download"></span> Save</h2>
                 </div>
             </div>
         </div>
