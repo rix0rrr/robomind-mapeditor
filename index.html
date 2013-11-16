@@ -26,8 +26,10 @@
                     <h2 class="panel-title">Preview</h2>
                 </div>
                 <div class="panel-body panel-fitting">
-                    <div class="editor" data-bind="attr: { style: editor.cssStyle }, css: { 'action-paint': leftMouseFunction() == 'paint', 'action-pan': leftMouseFunction() == 'pan' }, foreach: editor.mapTiles">
-                        <div data-bind="attr: { style: cssStyle }"></div>
+                    <div class="editor" data-bind="attr: { style: editor.outerCssStyle }, css: { 'action-paint': leftMouseFunction() == 'paint', 'action-pan': leftMouseFunction() == 'pan' }">
+                        <div class="editor-inner" data-bind="attr: { style: editor.innerCssStyle }, foreach: editor.mapTiles">
+                            <div data-bind="attr: { style: cssStyle }"></div>
+                        </div>
                     </div>
                 </div>
             </div>

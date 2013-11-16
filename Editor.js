@@ -2,17 +2,28 @@ function Editor(map, palette, skin) {
     var self = this;
 
     var nativeTileSize = $V([200, 200]);
-    var nativeBgSize   = 512;
+    var nativeBgSize   = 1024;
     var extraBackgroundZoom = 2;
 
     self.zoomFactor = ko.observable(0.15);
     self.topLeft    = ko.observable($V([0, 0])); // After scaling
 
-    self.cssStyle = ko.computed(function() {
+    self.outerCssStyle = ko.computed(function() {
         return mkCss({
+            position: 'relative',
+            overflow: 'hidden',
             background: skin.file('bg.png'),
             'background-size': (nativeBgSize * self.zoomFactor() * extraBackgroundZoom) + 'px',
             'background-position': -self.topLeft().e(1) + 'px ' + -self.topLeft().e(2) + 'px'
+        });
+    });
+
+    self.innerCssStyle = ko.computed(function() {
+        var tl = self.topLeft();
+        return mkCss({
+            position: 'absolute',
+            left: -tl.e(1) + 'px',
+            top:  -tl.e(2) + 'px'
         });
     });
 
@@ -27,7 +38,7 @@ function Editor(map, palette, skin) {
     self.mapTiles = ko.computed(function() {
         return _(map.tiles()).map(function(tile) {
             var size = tile.unscaledSize * self.zoomFactor();
-            var pxLoc = self.tileToPixel(tile.loc);
+            var pxLoc = self.tileToPixel(tile.loc, true);
 
             return {
                 cssStyle: mkCss({
@@ -58,11 +69,13 @@ function Editor(map, palette, skin) {
     /**
      * Translate tile coords to pixel coords
      */
-    self.tileToPixel = function(loc) {
+    self.tileToPixel = function(loc, inInner) {
         var unscaledPx = $V([
                 loc.e(1) * nativeTileSize.e(1),
                 loc.e(2) * nativeTileSize.e(2)
                 ]);
-        return unscaledPx.multiply(self.zoomFactor()).subtract(self.topLeft());
+        var r = unscaledPx.multiply(self.zoomFactor());
+        if (!inInner) r = r.subtract(self.topLeft());
+        return r;
     }
 }

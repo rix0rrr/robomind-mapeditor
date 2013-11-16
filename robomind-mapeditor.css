@@ -13,9 +13,6 @@ h3 { color: #A6E067; }
 .editor {
     width: 600px;
     height: 600px;
-    /* These are necessary for the editor to function properly */
-    position: relative;
-    overflow: hidden;
 }
 
 .action-paint { cursor: crosshair; }
