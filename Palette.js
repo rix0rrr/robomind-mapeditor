@@ -7,29 +7,30 @@ function Palette(skin) {
 
     var size = 50;
 
-    self.toolsMenu = ko.computed(function() {
-        return _(self.tools()).map(function(tool) {
-            return {
-                selected: self.selectedTool() === tool,
-                select: function() {
-                    self.selectedTool(tool)
-                },
-                cssStyle: mkCss({
-                    background: skin.file(tool.id + '.png'),
-                    'background-size': 'auto ' + size + 'px',
-                    'width': size + 'px',
-                    'height': size + 'px'
-                })
-            }
-        });
-    });
-
     self.addTool = function(tool) {
+        if (!self.selectedTool()) self.selectedTool(tool);
+
         toolIndex[tool.id] = tool;
         self.tools.push(tool);
     }
 
-    self.getTool = function(id) {
+    self.tool = function(id) {
         return toolIndex[id];
     }
+
+    self.toolBtn = function(id) {
+        var tool = self.tool(id);
+        return {
+            selected: self.selectedTool() === tool,
+            select: function() {
+                self.selectedTool(tool)
+            },
+            cssStyle: mkCss({
+                background: skin.file(tool.id + '.png'),
+                'background-size': 'auto ' + tool.bgSize(size) + 'px',
+                'width': size + 'px',
+                'height': size + 'px'
+            })
+        }
+    };
 }

@@ -60,7 +60,7 @@ function MapFile(map, palette) {
         var mapLines = getSection(lines, 'map');
         _(mapLines).each(function(line, y) {
             _(line).each(function(c, x) {
-                var tool = palette.getTool('tile-' + c);
+                var tool = palette.tool('tile-' + c);
                 if (tool) newTiles.push(tool.toTile(map, $V([ x, y ])));
             });
         });

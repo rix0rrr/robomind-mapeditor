@@ -25,16 +25,9 @@ h3 { color: #A6E067; }
     margin: 0px 20px;
 }
 
-.palette .tool {
-    float: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    border: solid 2px transparent;
-}
-
-.palette .tool.selected {
-    border-color: red;
-}
+.palette .tool { border: solid 2px transparent; width: auto; height: auto; }
+.palette .tool.selected { border-color: red; }
+.palette .tool-inner { cursor: pointer; }
 
 .text-column {
     margin-top: -20px; /* Compensate bottom margin of the navbar */

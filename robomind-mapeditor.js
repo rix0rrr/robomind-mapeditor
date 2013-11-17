@@ -2,7 +2,6 @@ $(function() {
     var app = new App();
 
     // Load palette with default tools
-    app.palette.addTool(new Tool('tile-@'));
     app.palette.addTool(new Tool('tile-A', true));
     app.palette.addTool(new Tool('tile-B', true));
     app.palette.addTool(new Tool('tile-C', true));
@@ -21,6 +20,7 @@ $(function() {
     app.palette.addTool(new Tool('tile-P', true));
     app.palette.addTool(new Tool('tile-Q', true));
     app.palette.addTool(new Tool('tile-R'));
+    app.palette.addTool(new Tool('tile-@'));
 
     ko.applyBindings(app);
 
