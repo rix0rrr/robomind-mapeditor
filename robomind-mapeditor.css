@@ -26,6 +26,13 @@ h3 { color: #A6E067; }
     margin: 0px 20px;
 }
 
+.top-right {
+    position: absolute;
+    left: 100%;
+    top: 10px;
+    margin-left: -50px;
+}
+
 .palette .tool { border: solid 2px transparent; width: auto; height: auto; }
 .palette .tool.selected { border-color: red; }
 .palette .tool-inner { cursor: pointer; }

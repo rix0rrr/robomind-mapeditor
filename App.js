@@ -40,6 +40,9 @@ function App() {
     var currentAction;
 
     $('.editor').mousedown(function(e) {
+        var btn = $(e.target).closest('button');
+        if (btn.length) return;
+
         var mouseAction = e.which == 1 ? self.leftMouseFunction() : self.rightMouseFunction();
         currentAction = mouseActions[mouseAction];
 
