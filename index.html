@@ -34,24 +34,6 @@
 
         <!-- Edit Screen -->
         <div data-bind="visible: page() == 'edit'">
-            <div class="panel editor-position">
-                <div class="panel-heading">
-                    <h2 class="panel-title">Preview</h2>
-                </div>
-                <div class="panel-body panel-fitting">
-                    <div class="editor" data-bind="attr: { style: editor.outerCssStyle }, css: { 'action-paint': leftMouseFunction() == 'paint', 'action-pan': leftMouseFunction() == 'pan' }">
-                        <div class="editor-inner" data-bind="attr: { style: editor.innerCssStyle }, foreach: editor.mapTiles">
-                            <div data-bind="attr: { style: cssStyle }"></div>
-                        </div>
-
-                        <div class="btn-group-vertical top-right">
-                            <button class="btn btn-default" data-bind="click: editor.zoomIn"><span class="glyphicon glyphicon-zoom-in"></span></button>
-                            <button class="btn btn-default" data-bind="click: editor.zoomOut"><span class="glyphicon glyphicon-zoom-out"></span></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="palette-position">
                 <div class="btn-group-vertical btn-group-lg">
                     <button class="btn btn-primary" data-bind="click: paint, css: { active: leftMouseFunction() == 'paint' }"><span class="glyphicon glyphicon-pencil"></span> Paint</button>
@@ -100,6 +82,25 @@
                     </div>
                 </div>
             </div>
+
+            <div class="panel editor-position">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Preview</h2>
+                </div>
+                <div class="panel-body panel-fitting">
+                    <div class="editor" data-bind="attr: { style: editor.outerCssStyle }, css: { 'action-paint': leftMouseFunction() == 'paint', 'action-pan': leftMouseFunction() == 'pan' }">
+                        <div class="editor-inner" data-bind="attr: { style: editor.innerCssStyle }, foreach: editor.mapTiles">
+                            <div data-bind="attr: { style: cssStyle }"></div>
+                        </div>
+
+                        <div class="btn-group-vertical top-right">
+                            <button class="btn btn-default" data-bind="click: editor.zoomIn"><span class="glyphicon glyphicon-zoom-in"></span></button>
+                            <button class="btn btn-default" data-bind="click: editor.zoomOut"><span class="glyphicon glyphicon-zoom-out"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Load Screen -->
