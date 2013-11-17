@@ -88,6 +88,13 @@ h3 { color: #A6E067; }
 
 textarea { font-family: Consolas, Monaco, monospace; }
 
+ /* Disable responsiveness on navbar (always float) */
+.navbar-header { float; left; }
+.navbar-header:after { clear: none; }
+.navbar-nav { float: left; }
+.navbar-nav>li { float: left; }
+.navbar-right { float: right; }
+
 /*----------------------- FACEBOOK BUTTON ----------------------*/
 .btn-facebook {
   background-color: #246ec4;
