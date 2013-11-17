@@ -26,4 +26,12 @@ $(function() {
     ko.applyBindings(app);
 
     app.mapFile.setFileControl(document.getElementById('loadMapFile'));
+
+    // Load from hash fragment
+    var loadState = function() {
+        var h = window.location.hash.substr(1);
+        if (h) app.mapFile.loadFromShareFragment(h);
+    }
+    $(window).on('hashchange', loadState);
+    loadState();
 });

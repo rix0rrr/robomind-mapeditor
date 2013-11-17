@@ -4,9 +4,12 @@
 function MapFile(map, palette) {
     var self = this;
 
+    var lzma = new LZMA("bower_components/LZMA-JS/src/lzma_worker.js");
+
     self.fileApisAvailable = ko.observable(window.File && window.FileReader);
     self.saveRepresentation = ko.observable('');
     self.saveRepresentationEncoded = ko.observable('');
+    self.shareURL = ko.observable('');
 
     self.setFileControl = function(fileControl) {
         self.fileControl = fileControl;
@@ -90,5 +93,49 @@ function MapFile(map, palette) {
             self.textArea('');
         } else
             alert('Copy and paste the contents of a .map file here');
+    }
+
+    /**
+     * Convert array to string, for interfacing with the LZMA library
+     */
+    var arrayToStr = function(arr) {
+        var binary = '';
+        var bytes  = new Uint8Array(arr);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return binary;
+    }
+
+    /**
+     * Convert string to array
+     */
+    var strToArray = function(str) {
+        var bytes = [];
+        var len = str.length;
+        for (var i = 0; i < len; i++) {
+            bytes.push(str.charCodeAt(i));
+        }
+        return bytes;
+    }
+
+    self.prepareShareURL = function() {
+        self.shareURL('');
+        lzma.compress(mapToText(), 1, function(compressed) {
+            var blob = btoa(arrayToStr(compressed));
+            self.shareURL(location.protocol+'//'+location.host+location.pathname + '#' + blob);
+        });
+    }
+
+    self.loadFromShareFragment = function(blob) {
+        var compressed = atob(blob.trim());
+        lzma.decompress(strToArray(compressed), function(txt) {
+            if (txt) self.load(txt);
+        });
+    }
+
+    self.copyShareURL = function() {
+        window.prompt("Press Ctrl-C to copy the URL to your clipboard:", self.shareURL());
     }
 }

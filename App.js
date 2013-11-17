@@ -70,6 +70,11 @@ function App() {
         self.mapFile.save();
         self.page('save');
     }
+    self.toShare = function() {
+        self.page('share');
+        self.mapFile.prepareShareURL();
+    }
+
 
     self.paint = function() {
         self.leftMouseFunction('paint');

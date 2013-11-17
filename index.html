@@ -5,6 +5,7 @@
         <title>RoboMind Map Editor</title>
 
         <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="robomind-mapeditor.css">
     </head>
     <body>
@@ -16,6 +17,7 @@
                 <li data-bind="css: { active: page() == 'edit' }"><a href="#" data-bind="click: toEdit">Edit</a></li>
                 <li data-bind="css: { active: page() == 'load' }"><a href="#" data-bind="click: toLoad">Load</a></li>
                 <li data-bind="css: { active: page() == 'save' }"><a href="#" data-bind="click: toSave">Save</a></li>
+                <li data-bind="css: { active: page() == 'share' }"><a href="#" data-bind="click: toShare">Share</a></li>
             </ul>
 
             <!-- Theme dropdown button -->
@@ -134,7 +136,7 @@
 
                     <form role="form" data-bind="submit: mapFile.loadFromText">
                         <div class="form-group">
-                            <textarea data-bind="value: mapFile.textArea" id="loadMapText" class="form-control" rows="8"></textarea>
+                            <textarea data-bind="value: mapFile.textArea" id="loadMapText" class="form-control dark-input" rows="8"></textarea>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Load">
@@ -154,7 +156,7 @@
 
                     <h3>Download as file</h3>
 
-                    <a class="btn btn-default" download="robomindmap.map" data-bind="attr: { href: 'data:application/octet-stream,' + mapFile.saveRepresentationEncoded() }">Download</a>
+                    <a class="btn btn-primary" download="robomindmap.map" data-bind="attr: { href: 'data:application/octet-stream,' + mapFile.saveRepresentationEncoded() }">Download</a>
 
                     <h3>Copy as text</h3>
 
@@ -162,7 +164,32 @@
                     <tt>.map</tt>, and be sure to save the file with the UCS-2
                     or UTF-16 encoding.</p>
 
-                    <textarea data-bind="value: mapFile.saveRepresentation" rows="8" class="form-control readonly" readonly></textarea>
+                    <textarea data-bind="value: mapFile.saveRepresentation" rows="8" class="form-control dark-input" readonly></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Share Screen -->
+        <div data-bind="visible: page() == 'share'" class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-column">
+                    <h2><span class="glyphicon glyphicon-share-alt"></span> Share</h2>
+
+                    <p>Share your map by sharing the following URL. Click it to copy it to your clipboard.</p>
+
+                    <p>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="fa fa-anchor"></span></span>
+                        <input type="text" class="form-control dark-input" readonly data-bind="value: mapFile.shareURL">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" data-bind="click: mapFile.copyShareURL">Copy</button>
+                        </span>
+                    </div>
+                    </p>
+
+                    <p>For example, share it on <a target="_blank" href="https://www.facebook.com/RoboMind">RoboMind's Facebook page:</a></p>
+
+                    <p><a class="btn btn-lg btn-facebook" target="_blank" href="https://www.facebook.com/RoboMind"><span class="fa fa-facebook"></span> | Share on Facebook</a></p>
                 </div>
             </div>
         </div>
@@ -173,7 +200,7 @@
         <script src="bower_components/underscore/underscore-min.js"></script>
         <script src="bower_components/json2/json2.js"></script>
         <script src="bower_components/base64/base64.min.js"></script>
-        <script src="bower_components/LZMA-JS/src/lzma_worker.js"></script>
+        <script src="bower_components/LZMA-JS/src/lzma.js"></script>
         <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
         <script src="bower_components/sylvester/sylvester.js"></script>
         <!-- App -->

@@ -66,14 +66,16 @@ h3 { color: #A6E067; }
     padding: 0px;
 }
 
-.readonly {
+.dark-input, .input-group-addon {
     background: #383737 !important;
     color: #DDD;
+    border-color: #777;
 }
 
 .navbar-inverse .navbar-btn {
     background: #383737 !important;
     color: #DDD;
+    border-color: #777;
 }
 
 .navbar-inverse .caret {
@@ -82,3 +84,38 @@ h3 { color: #A6E067; }
 }
 
 .navbar-inverse .btn-group.open .navbar-btn { color: #FFF; }
+
+.url-button { overflow: hidden; text-overflow: ellipsis; }
+
+textarea { font-family: Consolas, Monaco, monospace; }
+
+/*----------------------- FACEBOOK BUTTON ----------------------*/
+.btn-facebook {
+  background-color: #246ec4;
+  border-color: #246ec4;
+  color: #ddd;
+}
+.btn-facebook:hover,
+.btn-facebook:focus,
+.btn-facebook:active,
+.btn-facebook.active {
+  background-color: #2062ae;
+  border-color: #1c5699;
+  color: white;
+}
+.btn-facebook.disabled:hover,
+.btn-facebook.disabled:focus,
+.btn-facebook.disabled:active,
+.btn-facebook.disabled.active,
+.btn-facebook[disabled]:hover,
+.btn-facebook[disabled]:focus,
+.btn-facebook[disabled]:active,
+.btn-facebook[disabled].active,
+fieldset[disabled] .btn-facebook:hover,
+fieldset[disabled] .btn-facebook:focus,
+fieldset[disabled] .btn-facebook:active,
+fieldset[disabled] .btn-facebook.active {
+  background-color: #246ec4;
+  border-color: #246ec4;
+}
+
