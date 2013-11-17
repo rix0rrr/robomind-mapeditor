@@ -63,3 +63,15 @@ h3 { color: #A6E067; }
     background: #383737 !important;
     color: #DDD;
 }
+
+.navbar-inverse .navbar-btn {
+    background: #383737 !important;
+    color: #DDD;
+}
+
+.navbar-inverse .caret {
+    border-top-color: #DDD !important;
+    border-bottom-color: #DDD !important;
+}
+
+.navbar-inverse .btn-group.open .navbar-btn { color: #FFF; }

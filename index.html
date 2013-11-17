@@ -17,6 +17,17 @@
                 <li data-bind="css: { active: page() == 'load' }"><a href="#" data-bind="click: toLoad">Load</a></li>
                 <li data-bind="css: { active: page() == 'save' }"><a href="#" data-bind="click: toSave">Save</a></li>
             </ul>
+
+            <!-- Theme dropdown button -->
+            <div class="btn-group navbar-right" style="margin-right: 10px;">
+                <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><span data-bind="text: skin().text"></span> theme <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" data-bind="foreach: skins">
+                    <li><a href="#" data-bind="click: function() { $parent.skin($data) }">
+                        <span style="width: 1em;" class="glyphicon" data-bind="css: { 'glyphicon-ok' : $parent.skin() == $data }"></span>
+                        <span data-bind="text: text"></span>
+                    </a></li>
+                </ul>
+            </div>
         </nav>
 
         <!-- Edit Screen -->

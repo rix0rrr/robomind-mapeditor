@@ -3,11 +3,20 @@ function App() {
 
     self.page = ko.observable('edit');
 
-    self.skin      = ko.observable('grassSkin');
+    //--------------------------------------------------------------
+    // SKINS
+    self.skins = ko.observable([
+            { text: 'Desert', value: 'dessertSkin' },
+            { text: 'Grass',  value: 'grassSkin' },
+            { text: 'LEGO',   value: 'legoSkin' }
+    ]);
+    self.skin  = ko.observable(self.skins()[1]);
     self.skin.file = function(filename) {
-        return 'skins/' + self.skin() + '/' + filename;
+        return 'skins/' + self.skin().value + '/' + filename;
     }
 
+    //--------------------------------------------------------------
+    // ACTIONS
     self.leftMouseFunction  = ko.observable('paint');
     self.rightMouseFunction = ko.computed(function() {
         return self.leftMouseFunction() == 'paint' ? 'pan' : 'paint';
