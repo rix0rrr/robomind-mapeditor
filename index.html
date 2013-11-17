@@ -112,11 +112,15 @@
 
                     <h3>Download as file</h3>
 
-                    <a class="btn btn-default" download="robomindmap.map" data-bind="attr: { href: 'data:application/octet-stream;' + mapFile.saveRepresentation }">Download</a>
+                    <a class="btn btn-default" download="robomindmap.map" data-bind="attr: { href: 'data:application/octet-stream,' + mapFile.saveRepresentationEncoded() }">Download</a>
 
                     <h3>Copy as text</h3>
 
-                    <pre data-bind="text: mapFile.saveRepresentation"></pre>
+                    <p>Copy the following to a text file with the extension
+                    <tt>.map</tt>, and be sure to save the file with the UCS-2
+                    or UTF-16 encoding.</p>
+
+                    <textarea data-bind="value: mapFile.saveRepresentation" rows="8" class="form-control readonly" readonly></textarea>
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ function MapFile(map, palette) {
 
     self.fileApisAvailable = ko.observable(window.File && window.FileReader);
     self.saveRepresentation = ko.observable('');
+    self.saveRepresentationEncoded = ko.observable('');
 
     self.setFileControl = function(fileControl) {
         self.fileControl = fileControl;
@@ -36,6 +37,7 @@ function MapFile(map, palette) {
      */
     self.save = function() {
         self.saveRepresentation(mapToText());
+        self.saveRepresentationEncoded(encodeURIComponent(self.saveRepresentation()));
     }
 
     var mapToText = function() {

@@ -64,3 +64,8 @@ h3 { color: #A6E067; }
 .panel-fitting {
     padding: 0px;
 }
+
+.readonly {
+    background: #383737 !important;
+    color: #DDD;
+}
