@@ -4,6 +4,17 @@ function MapTile(loc, id, unscaledSize) {
     this.unscaledSize = unscaledSize;
     this.layer = 0;
 }
+MapTile.prototype.col = function() {
+    return this.loc.e(1);
+}
+MapTile.prototype.row = function() {
+    return this.loc.e(2);
+}
+MapTile.prototype.mapSymbol = function() {
+    if (this.id.match(/^tile-/))
+        return this.id.substr(5);
+    return '?';
+}
 
 /**
  * Sort first by layer, then by row, then by column

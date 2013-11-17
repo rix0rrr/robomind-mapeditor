@@ -5,6 +5,7 @@ function MapFile(map, palette) {
     var self = this;
 
     self.fileApisAvailable = ko.observable(window.File && window.FileReader);
+    self.saveRepresentation = ko.observable('');
 
     self.setFileControl = function(fileControl) {
         self.fileControl = fileControl;
@@ -28,6 +29,26 @@ function MapFile(map, palette) {
         });
 
         return ret;
+    }
+
+    /**
+     * Save current map representation to the saveRepresentation observable
+     */
+    self.save = function() {
+        self.saveRepresentation(mapToText());
+    }
+
+    var mapToText = function() {
+        var ret = [];
+
+        ret.push('map:');
+        ret = ret.concat(_(map.getTiles()).map(function(row) {
+            return _(row).map(function(tile) {
+                return tile ? tile.mapSymbol() : ' ';
+            }).join('');
+        }));
+
+        return ret.join('\n');
     }
 
     self.load = function(text) {

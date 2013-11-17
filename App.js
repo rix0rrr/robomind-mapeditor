@@ -54,7 +54,10 @@ function App() {
 
     self.toEdit = function() { self.page('edit'); }
     self.toLoad = function() { self.page('load'); }
-    self.toSave = function() { self.page('save'); }
+    self.toSave = function() { 
+        self.mapFile.save();
+        self.page('save');
+    }
 
     self.paint = function() {
         self.leftMouseFunction('paint');

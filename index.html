@@ -68,7 +68,7 @@
                     copy and paste the contents of a <tt>.map</tt> into
                     the text box.</p>
 
-                    <h3>From File</h3>
+                    <h3>From file</h3>
 
                     <div data-bind="if: mapFile.fileApisAvailable">
                         <form role="form" data-bind="submit: mapFile.loadFromFile">
@@ -86,7 +86,7 @@
                         file manually into the text box below.</p>
                     </div>
 
-                    <h3>From Text</h3>
+                    <h3>From text</h3>
 
                     <p>Copy the contents of the .map file here:</p>
 
@@ -107,6 +107,16 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-column">
                     <h2><span class="glyphicon glyphicon-cloud-download"></span> Save</h2>
+
+                    <p>Download the current map as a file, or copy its contents.</p>
+
+                    <h3>Download as file</h3>
+
+                    <a class="btn btn-default" download="robomindmap.map" data-bind="attr: { href: 'data:application/octet-stream;' + mapFile.saveRepresentation }">Download</a>
+
+                    <h3>Copy as text</h3>
+
+                    <pre data-bind="text: mapFile.saveRepresentation"></pre>
                 </div>
             </div>
         </div>
