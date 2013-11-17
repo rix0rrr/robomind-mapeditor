@@ -26,7 +26,7 @@ function Palette(skin) {
                 self.selectedTool(tool)
             },
             cssStyle: mkCss({
-                background: skin.file(tool.id + '.png'),
+                background: 'url(' + tool.bgImage(skin) + ')',
                 'background-size': 'auto ' + tool.bgSize(size) + 'px',
                 'width': size + 'px',
                 'height': size + 'px'

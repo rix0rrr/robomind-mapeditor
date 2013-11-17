@@ -15,6 +15,9 @@ MapTile.prototype.mapSymbol = function() {
         return this.id.substr(5);
     return '?';
 }
+MapTile.prototype.hasLoc = function(loc) {
+    return this.loc.eql(loc);
+}
 
 /**
  * Sort first by layer, then by row, then by column

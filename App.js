@@ -5,7 +5,7 @@ function App() {
 
     self.skin      = ko.observable('grassSkin');
     self.skin.file = function(filename) {
-        return 'url(skins/' + self.skin() + '/' + filename + ')';
+        return 'skins/' + self.skin() + '/' + filename;
     }
 
     self.leftMouseFunction  = ko.observable('paint');

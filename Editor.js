@@ -12,7 +12,7 @@ function Editor(map, palette, skin) {
         return mkCss({
             position: 'relative',
             overflow: 'hidden',
-            background: skin.file('bg.png'),
+            background: 'url(' + skin.file('bg.png') + ')',
             'background-size': (nativeBgSize * self.zoomFactor() * extraBackgroundZoom) + 'px',
             'background-position': -self.topLeft().e(1) + 'px ' + -self.topLeft().e(2) + 'px'
         });
@@ -42,7 +42,7 @@ function Editor(map, palette, skin) {
 
             return {
                 cssStyle: mkCss({
-                    background: skin.file(tile.id + '.png'),
+                    background: 'url(' + skin.file(tile.id + '.png') + ')',
                     'background-size': 'auto ' + size + 'px',
                     width: size + 'px',
                     height: size + 'px',

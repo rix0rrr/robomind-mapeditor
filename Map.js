@@ -8,10 +8,16 @@ function Map() {
 
         if (self.tiles().length <= i)
             self.tiles.push(newTile);
-        else if (self.tiles()[i].loc.eql(newTile.loc))
+        else if (self.tiles()[i].hasLoc(newTile.loc))
             self.tiles.splice(i, 1, newTile);
         else
             self.tiles.splice(i, 0, newTile);
+    }
+
+    self.removeTile = function(loc) {
+        self.tiles(_(self.tiles()).filter(function(tile) {
+            return !tile.hasLoc(loc);
+        }));
     }
 
     self.replaceTiles = function(tiles) {

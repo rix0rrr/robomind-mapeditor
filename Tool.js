@@ -16,4 +16,19 @@ function Tool(id, shadow) {
     self.bgSize = function(size) {
         return size * textureToTile;
     }
+
+    self.bgImage = function(skin) {
+        return skin.file(self.id + '.png');
+    }
+}
+
+function RemoveTool() {
+    var self = this;
+
+    self.id = 'remove';
+    self.click  = function(map, loc) { map.removeTile(loc); }
+    self.bgSize = function(size) { return size; }
+    self.bgImage = function(skin) {
+        return 'images/remove.png';
+    }
 }

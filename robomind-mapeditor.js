@@ -21,6 +21,7 @@ $(function() {
     app.palette.addTool(new Tool('tile-Q', true));
     app.palette.addTool(new Tool('tile-R'));
     app.palette.addTool(new Tool('tile-@'));
+    app.palette.addTool(new RemoveTool());
 
     ko.applyBindings(app);
 
