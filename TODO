@@ -2,6 +2,8 @@ EDITOR
     - Zoom in the middle of the map
     - Extra layers/paint
     - Translucent tool preview 
-
-I/O
-    - Share via URL
+    - Compensate for jumpy mouse by drawing lines in MouseMove
+    - Make editing faster
+    
+GRAPHICS
+    - Obtain LEGO tiles
