@@ -2,25 +2,26 @@ $(function() {
     var app = new App();
 
     // Load palette with default tools
-    app.palette.addTool(new Tool('tile-A', true));
-    app.palette.addTool(new Tool('tile-B', true));
-    app.palette.addTool(new Tool('tile-C', true));
-    app.palette.addTool(new Tool('tile-D', true));
-    app.palette.addTool(new Tool('tile-E', true));
-    app.palette.addTool(new Tool('tile-F', true));
-    app.palette.addTool(new Tool('tile-G', true));
-    app.palette.addTool(new Tool('tile-H', true));
-    app.palette.addTool(new Tool('tile-I', true));
-    app.palette.addTool(new Tool('tile-J'));
-    app.palette.addTool(new Tool('tile-K'));
-    app.palette.addTool(new Tool('tile-L'));
-    app.palette.addTool(new Tool('tile-M'));
-    app.palette.addTool(new Tool('tile-N', true));
-    app.palette.addTool(new Tool('tile-O', true));
-    app.palette.addTool(new Tool('tile-P', true));
-    app.palette.addTool(new Tool('tile-Q', true));
-    app.palette.addTool(new Tool('tile-R'));
-    app.palette.addTool(new Tool('tile-@'));
+    app.palette.addTool(new Tool('A', true));
+    app.palette.addTool(new Tool('B', true));
+    app.palette.addTool(new Tool('C', true));
+    app.palette.addTool(new Tool('D', true));
+    app.palette.addTool(new Tool('E', true));
+    app.palette.addTool(new Tool('F', true));
+    app.palette.addTool(new Tool('G', true));
+    app.palette.addTool(new Tool('H', true));
+    app.palette.addTool(new Tool('I', true));
+    app.palette.addTool(new Tool('J'));
+    app.palette.addTool(new Tool('K'));
+    app.palette.addTool(new Tool('L'));
+    app.palette.addTool(new Tool('M'));
+    app.palette.addTool(new Tool('N', true));
+    app.palette.addTool(new Tool('O', true));
+    app.palette.addTool(new Tool('P', true));
+    app.palette.addTool(new Tool('Q', true));
+    app.palette.addTool(new Tool('R'));
+    app.palette.addTool(new Tool('@'));
+    app.palette.addTool(new Tool('*', false, 'beacon'));
     app.palette.addTool(new RemoveTool());
 
     ko.applyBindings(app);

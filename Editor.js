@@ -42,7 +42,7 @@ function Editor(map, palette, skin) {
 
             return {
                 cssStyle: mkCss({
-                    background: 'url(' + skin.file(tile.id + '.png') + ')',
+                    background: 'url(' + tile.tool.bgImage(skin) + ')',
                     'background-size': 'auto ' + size + 'px',
                     width: size + 'px',
                     height: size + 'px',

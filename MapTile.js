@@ -1,8 +1,16 @@
-function MapTile(loc, id, unscaledSize) {
-    this.loc = loc;
-    this.id  = id;
-    this.unscaledSize = unscaledSize;
-    this.layer = 0;
+/**
+ * Map Tile
+ *
+ * Locations are actually 3-dimensional, the 3rd coordinate
+ * is the "layer"
+ */
+function MapTile(loc, id, tool) {
+    if (loc.dimensions() != 3) throw new Error("Tile location should have 3 dimensions");
+
+    this.loc  = loc;
+    this.id   = id;
+    this.tool = tool;
+    this.unscaledSize = tool.bgSize(200);
 }
 MapTile.prototype.col = function() {
     return this.loc.e(1);
@@ -16,14 +24,19 @@ MapTile.prototype.mapSymbol = function() {
     return '?';
 }
 MapTile.prototype.hasLoc = function(loc) {
-    return this.loc.eql(loc);
+    if (loc.dimensions() == 3)
+        // Match location exactly
+        return this.loc.eql(loc);
+    else
+        // Match location approximately
+        return this.loc.e(1) == loc.e(1) && this.loc.e(2) == loc.e(2);
 }
 
 /**
  * Sort first by layer, then by row, then by column
  */
 MapTile.compare = function(a, b) {
-    var d_layer = a.layer    - b.layer;
+    var d_layer = a.loc.e(3) - b.loc.e(3);
     var d_row   = a.loc.e(2) - b.loc.e(2);
     var d_col   = a.loc.e(1) - b.loc.e(1);
 

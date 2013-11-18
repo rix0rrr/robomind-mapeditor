@@ -14,6 +14,9 @@ function Map() {
             self.tiles.splice(i, 0, newTile);
     }
 
+    /**
+     * Remove a tile at a 2D or 3D location
+     */
     self.removeTile = function(loc) {
         self.tiles(_(self.tiles()).filter(function(tile) {
             return !tile.hasLoc(loc);

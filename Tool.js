@@ -1,16 +1,28 @@
-function Tool(id, shadow) {
+/**
+ * ID is the symbol used in mapfiles
+ *
+ */
+function Tool(id, shadow, fileName) {
     var self = this;
 
     self.id     = id;
     self.shadow = shadow;
+    self.layer  = 0;
+    self.fileName = fileName || ('tile-' + self.id);
+
     var textureToTile = (shadow ? 225 : 200) / 200;
+
+    var to3DLocation = function(loc2d) {
+        return $V([ loc2d.e(1), loc2d.e(2), self.layer ]);
+    }
 
     self.click = function(map, loc) {
         map.addOrReplaceTile(self.toTile(map, loc));
     }
 
     self.toTile = function(map, loc) {
-        return new MapTile(loc, self.id, self.bgSize(200));
+        if (loc.dimensions() != 2) throw new Error("Tool functions accept 2D locations");
+        return new MapTile(to3DLocation(loc), self.id, self);
     }
 
     self.bgSize = function(size) {
@@ -18,7 +30,7 @@ function Tool(id, shadow) {
     }
 
     self.bgImage = function(skin) {
-        return skin.file(self.id + '.png');
+        return skin.file(self.fileName + '.png');
     }
 }
 
