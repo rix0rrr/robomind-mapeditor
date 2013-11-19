@@ -1,5 +1,8 @@
 var TileSize   = 200;
 var ShadowSize = 25;
+var TileLayer  = 0;
+var PaintLayer = -1;
+var ExtraLayer = 1;
 
 /**
  * ID is the symbol used in mapfiles
@@ -11,7 +14,7 @@ function Tool(id, options) {
     options = options || {};
 
     self.id       = id;
-    self.layer    = options.layer || 0;
+    self.layer    = options.layer || TileLayer;
     self.xsize    = options.w || 1;
     self.ysize    = options.h || 1;
     var shadow    = options.shadow || false;

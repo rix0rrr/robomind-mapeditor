@@ -19,7 +19,7 @@ h3 { color: #A6E067; }
 .action-pan { cursor: move; }
 
 .palette-position {
-    width: 300px;
+    width: 360px;
     float: right;
     overflow: auto;
     margin: 0px 20px;
