@@ -61,6 +61,7 @@ function App() {
     });
 
     $(self.mapFile).on('loaded', function() {
+        self.editor.topLeft($V([0, 0]));
         self.toEdit();
     });
 
