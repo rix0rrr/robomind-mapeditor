@@ -41,6 +41,9 @@ MapTile.prototype.hasLoc = function(loc) {
         return false;
     }
 }
+MapTile.prototype.onLayer = function(layer) {
+    return this.loc.e(3) == layer;
+}
 
 /**
  * Sort first by layer, then by row, then by column

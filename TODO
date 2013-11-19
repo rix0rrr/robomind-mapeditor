@@ -1,6 +1,5 @@
 EDITOR
     - Zoom in the middle of the map
-    - Extra layers/paint
     - Translucent tool preview 
     - Compensate for jumpy mouse by drawing lines in MouseMove
     - Make editing faster

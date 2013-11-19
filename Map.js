@@ -52,12 +52,14 @@ function Map() {
     /**
      * Get tiles in a sparse array
      */
-    self.getTiles = function() {
+    self.getTiles2D = function(layer) {
         var ret = [];
         var row = [];
         var lastTile;
 
         _(self.tiles()).each(function(tile) {
+            if (!tile.onLayer(layer)) return;
+
             if (!lastTile || tile.row() == lastTile.row()) {
                 if (lastTile) 
                     for (var i = lastTile.col() + 1; i < tile.col(); i++)
@@ -74,5 +76,11 @@ function Map() {
         if (row.length) ret.push(row)
 
         return ret;
+    }
+
+    self.getTiles = function(layer) {
+        return _(self.tiles()).filter(function(tile) {
+            return tile.onLayer(layer);
+        });
     }
 }

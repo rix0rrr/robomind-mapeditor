@@ -5,6 +5,9 @@ function MapFile(map, palette) {
     var self = this;
 
     var lzma = new LZMA("bower_components/LZMA-JS/src/lzma_worker.js");
+    var baseUrl = function() {
+        return location.protocol+'//'+location.host+location.pathname;
+    }
 
     self.fileApisAvailable = ko.observable(window.File && window.FileReader);
     self.saveRepresentation = ko.observable('');
@@ -46,8 +49,21 @@ function MapFile(map, palette) {
     var mapToText = function() {
         var ret = [];
 
+        ret.push('# This file was saved at ' + new Date());
+        ret.push('# from ' + baseUrl());
+        ret.push('');
+        ret.push('extra:');
+        ret = ret.concat(_(map.getTiles(ExtraLayer)).map(function(tile) {
+            return tile.tool.id + '@' + tile.loc.e(1) + ',' + tile.loc.e(2);
+        }));
+        ret.push('');
+        ret.push('paint:');
+        ret = ret.concat(_(map.getTiles(PaintLayer)).map(function(tile) {
+            return '(' + tile.id.substr(0, 1) + ',' + tile.id.substr(1, 1) + ',' + tile.loc.e(1) + ',' + tile.loc.e(2) + ')';
+        }));
+        ret.push('');
         ret.push('map:');
-        ret = ret.concat(_(map.getTiles()).map(function(row) {
+        ret = ret.concat(_(map.getTiles2D(TileLayer)).map(function(row) {
             return _(row).map(function(tile) {
                 return tile ? tile.mapSymbol() : ' ';
             }).join('');
@@ -58,17 +74,48 @@ function MapFile(map, palette) {
 
     self.load = function(text) {
         var lines = text.split('\n');
-
         var newTiles = [];
+
+        var placeTool = function(id, x, y) {
+            //console.log('Placing', id, 'at', x, ',', y);
+            var tool = palette.tool(id);
+            if (tool) newTiles.push(tool.toTile(map, $V([ x, y ])));
+        }
+
+        // Load regular map tiles
         var mapLines = getSection(lines, 'map');
         _(mapLines).each(function(line, y) {
             _(line).each(function(c, x) {
-                var tool = palette.tool(c);
-                if (tool) newTiles.push(tool.toTile(map, $V([ x, y ])));
+                placeTool(c, x, y);
             });
         });
-        map.replaceTiles(newTiles);
 
+        // Load paint
+        var paints = getSection(lines, 'paint').join('');
+        _(paints.split('(')).each(function(paint) {
+            var m = /(w|b),(\.|-|\|),(\d+),(\d+)\)/.exec(paint);
+            if (!m) return;
+
+            var id = m[1] + m[2];
+            var x = parseInt(m[3], 10);
+            var y = parseInt(m[4], 10);
+
+            placeTool(id, x, y);
+        });
+
+        // Load extras
+        _(getSection(lines, 'extra')).each(function(extra) {
+            var m = /(\w+)@(\d+),(\d+)/.exec(extra);
+            if (!m) return;
+
+            var id = m[1];
+            var x = parseInt(m[2], 10);
+            var y = parseInt(m[3], 10);
+
+            placeTool(id, x, y);
+        });
+
+        map.replaceTiles(newTiles);
         $(self).trigger('loaded');
     }
 
@@ -124,7 +171,7 @@ function MapFile(map, palette) {
         self.shareURL('');
         lzma.compress(mapToText(), 1, function(compressed) {
             var blob = btoa(arrayToStr(compressed));
-            self.shareURL(location.protocol+'//'+location.host+location.pathname + '#' + blob);
+            self.shareURL(baseUrl() + '#' + blob);
         });
     }
 
