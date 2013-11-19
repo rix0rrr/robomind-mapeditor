@@ -23,12 +23,12 @@ $(function() {
     app.palette.addTool(new Tool('@'));
     app.palette.addTool(new Tool('*', { fileName: 'beacon' }));
     app.palette.addTool(new RemoveTool());
-    app.palette.addTool(new Tool('w.', { fileName: 'strokeWhiteDot' }));
-    app.palette.addTool(new Tool('b.', { fileName: 'strokeBlackDot' }));
-    app.palette.addTool(new Tool('w-', { fileName: 'strokeWhiteRight', w: 2, layer: 1, shareLoc: [ 'w|', 'b|'] }));
-    app.palette.addTool(new Tool('b-', { fileName: 'strokeBlackRight', w: 2, layer: 1, shareLoc: [ 'w|', 'b|']}));
-    app.palette.addTool(new Tool('w|', { fileName: 'strokeWhiteDown',  h: 2, layer: 1, shareLoc: [ 'w-', 'b-']}));
-    app.palette.addTool(new Tool('b|', { fileName: 'strokeBlackDown',  h: 2, layer: 1, shareLoc: [ 'w-', 'b-']}));
+    app.palette.addTool(new Tool('w.', { fileName: 'strokeWhiteDot', layer: -1 }));
+    app.palette.addTool(new Tool('b.', { fileName: 'strokeBlackDot', layer: -1 }));
+    app.palette.addTool(new Tool('w-', { fileName: 'strokeWhiteRight', w: 2, layer: -1, shareLoc: [ 'w|', 'b|'] }));
+    app.palette.addTool(new Tool('b-', { fileName: 'strokeBlackRight', w: 2, layer: -1, shareLoc: [ 'w|', 'b|']}));
+    app.palette.addTool(new Tool('w|', { fileName: 'strokeWhiteDown',  h: 2, layer: -1, shareLoc: [ 'w-', 'b-']}));
+    app.palette.addTool(new Tool('b|', { fileName: 'strokeBlackDown',  h: 2, layer: -1, shareLoc: [ 'w-', 'b-']}));
     app.palette.addTool(new Tool('disco', { fileName: 'extra-disco0',  textureTiles: 12, layer: 2 }));
 
     ko.applyBindings(app);
