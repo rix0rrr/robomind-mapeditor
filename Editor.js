@@ -1,7 +1,7 @@
 function Editor(map, palette, skin) {
     var self = this;
 
-    var nativeTileSize = $V([200, 200]);
+    var unscaledTileSize = 200;
     var nativeBgSize   = 1024;
     var extraBackgroundZoom = 2;
 
@@ -37,20 +37,15 @@ function Editor(map, palette, skin) {
 
     self.mapTiles = ko.computed(function() {
         return _(map.tiles()).map(function(tile) {
-            var size = tile.unscaledSize * self.zoomFactor();
+            var size = unscaledTileSize * self.zoomFactor();
             var pxLoc = self.tileToPixel(tile.loc, true);
 
-            return {
-                cssStyle: mkCss({
-                    background: 'url(' + tile.tool.bgImage(skin) + ')',
-                    'background-size': 'auto ' + size + 'px',
-                    width: size + 'px',
-                    height: size + 'px',
-                    position: 'absolute',
-                    left: pxLoc.e(1) + 'px',
-                    top: pxLoc.e(2) + 'px'
-                })
-            }
+            var css = tile.tool.image(skin, size, true);
+            css.position = 'absolute';
+            css['left'] = pxLoc.e(1) + 'px';
+            css['top']  = pxLoc.e(2) + 'px';
+
+            return { cssStyle: mkCss(css) };
         });
 
     });
@@ -61,8 +56,8 @@ function Editor(map, palette, skin) {
     self.pixelToTile = function(px) {
         var unscaledPx = px.add(self.topLeft()).multiply(1 / self.zoomFactor());
         return $V([ 
-                Math.floor(unscaledPx.e(1) / nativeTileSize.e(1)),
-                Math.floor(unscaledPx.e(2) / nativeTileSize.e(1))
+                Math.floor(unscaledPx.e(1) / unscaledTileSize),
+                Math.floor(unscaledPx.e(2) / unscaledTileSize)
                 ]);
     }
 
@@ -71,8 +66,8 @@ function Editor(map, palette, skin) {
      */
     self.tileToPixel = function(loc, inInner) {
         var unscaledPx = $V([
-                loc.e(1) * nativeTileSize.e(1),
-                loc.e(2) * nativeTileSize.e(2)
+                loc.e(1) * unscaledTileSize,
+                loc.e(2) * unscaledTileSize
                 ]);
         var r = unscaledPx.multiply(self.zoomFactor());
         if (!inInner) r = r.subtract(self.topLeft());

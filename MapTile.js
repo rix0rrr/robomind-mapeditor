@@ -10,7 +10,6 @@ function MapTile(loc, id, tool) {
     this.loc  = loc;
     this.id   = id;
     this.tool = tool;
-    this.unscaledSize = tool.bgSize(200);
 }
 MapTile.prototype.col = function() {
     return this.loc.e(1);
@@ -24,12 +23,23 @@ MapTile.prototype.mapSymbol = function() {
     return '?';
 }
 MapTile.prototype.hasLoc = function(loc) {
-    if (loc.dimensions() == 3)
+    if (loc.dimensions() == 3) {
         // Match location exactly
-        return this.loc.eql(loc);
-    else
+        for (var y = 0; y < this.tool.ysize; y++)
+            for (var x = 0; x < this.tool.xsize; x++)
+                if (this.loc.add($V([x, y, 0])).eql(loc))
+                    return true;
+        return false;
+    } else {
         // Match location approximately
-        return this.loc.e(1) == loc.e(1) && this.loc.e(2) == loc.e(2);
+        for (var y = 0; y < this.tool.ysize; y++)
+            for (var x = 0; x < this.tool.xsize; x++) {
+                var l = this.loc.add($V([x, y, 0]));
+                if (l.e(1) == loc.e(1) && l.e(2) == loc.e(2))
+                    return true;
+            }
+        return false;
+    }
 }
 
 /**

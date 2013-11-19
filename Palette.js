@@ -5,7 +5,7 @@ function Palette(skin) {
     self.selectedTool = ko.observable();
     var toolIndex = {};
 
-    var size = 50;
+    var toolSize = 50;
 
     self.addTool = function(tool) {
         if (!self.selectedTool()) self.selectedTool(tool);
@@ -25,12 +25,7 @@ function Palette(skin) {
             select: function() {
                 self.selectedTool(tool)
             },
-            cssStyle: mkCss({
-                background: 'url(' + tool.bgImage(skin) + ')',
-                'background-size': 'auto ' + tool.bgSize(size) + 'px',
-                'width': size + 'px',
-                'height': size + 'px'
-            })
+            cssStyle: mkCss(tool.image(skin, toolSize, false))
         }
     };
 }

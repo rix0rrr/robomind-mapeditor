@@ -2,27 +2,34 @@ $(function() {
     var app = new App();
 
     // Load palette with default tools
-    app.palette.addTool(new Tool('A', true));
-    app.palette.addTool(new Tool('B', true));
-    app.palette.addTool(new Tool('C', true));
-    app.palette.addTool(new Tool('D', true));
-    app.palette.addTool(new Tool('E', true));
-    app.palette.addTool(new Tool('F', true));
-    app.palette.addTool(new Tool('G', true));
-    app.palette.addTool(new Tool('H', true));
-    app.palette.addTool(new Tool('I', true));
+    app.palette.addTool(new Tool('A', { shadow: true }));
+    app.palette.addTool(new Tool('B', { shadow: true }));
+    app.palette.addTool(new Tool('C', { shadow: true }));
+    app.palette.addTool(new Tool('D', { shadow: true }));
+    app.palette.addTool(new Tool('E', { shadow: true }));
+    app.palette.addTool(new Tool('F', { shadow: true }));
+    app.palette.addTool(new Tool('G', { shadow: true }));
+    app.palette.addTool(new Tool('H', { shadow: true }));
+    app.palette.addTool(new Tool('I', { shadow: true }));
     app.palette.addTool(new Tool('J'));
     app.palette.addTool(new Tool('K'));
     app.palette.addTool(new Tool('L'));
     app.palette.addTool(new Tool('M'));
-    app.palette.addTool(new Tool('N', true));
-    app.palette.addTool(new Tool('O', true));
-    app.palette.addTool(new Tool('P', true));
-    app.palette.addTool(new Tool('Q', true));
-    app.palette.addTool(new Tool('R'));
+    app.palette.addTool(new Tool('N'));
+    app.palette.addTool(new Tool('O', { shadow: true, textureTiles: 27 }));
+    app.palette.addTool(new Tool('P', { shadow: true }));
+    app.palette.addTool(new Tool('Q', { shadow: true }));
+    app.palette.addTool(new Tool('R', { textureTiles: 10 }));
     app.palette.addTool(new Tool('@'));
-    app.palette.addTool(new Tool('*', false, 'beacon'));
+    app.palette.addTool(new Tool('*', { fileName: 'beacon' }));
     app.palette.addTool(new RemoveTool());
+    app.palette.addTool(new Tool('w.', { fileName: 'strokeWhiteDot' }));
+    app.palette.addTool(new Tool('b.', { fileName: 'strokeBlackDot' }));
+    app.palette.addTool(new Tool('w-', { fileName: 'strokeWhiteRight', w: 2, layer: 1 }));
+    app.palette.addTool(new Tool('b-', { fileName: 'strokeBlackRight', w: 2, layer: 1 }));
+    app.palette.addTool(new Tool('w|', { fileName: 'strokeWhiteDown',  h: 2, layer: 1 }));
+    app.palette.addTool(new Tool('b|', { fileName: 'strokeBlackDown',  h: 2, layer: 1 }));
+    app.palette.addTool(new Tool('disco', { fileName: 'extra-disco0',  textureTiles: 12, layer: 2 }));
 
     ko.applyBindings(app);
 
