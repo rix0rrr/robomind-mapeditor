@@ -3,15 +3,29 @@ function Map() {
 
     self.tiles = ko.observableArray();
 
-    self.addOrReplaceTile = function(newTile) {
+    /**
+     * Place a tile on the map, replacing any tiles at the same location
+     *
+     * Tiles with the given IDs are not replaced.
+     */
+    self.addOrReplaceTile = function(newTile, allowTileIds) {
         var i = sortedIndex(self.tiles(), newTile, MapTile.compare);
 
         if (self.tiles().length <= i)
+            // Add at end
             self.tiles.push(newTile);
-        else if (self.tiles()[i].hasLoc(newTile.loc))
-            self.tiles.splice(i, 1, newTile);
-        else
+        else {
+            var j = i;
+            // Remove tiles at those locations, unless they are allowed
+            while (self.tiles()[j].hasLoc(newTile.loc) && j < self.tiles().length) {
+                if (!_(allowTileIds).contains(self.tiles()[j].id))
+                    self.tiles.splice(j, 1);
+                j++;
+            }
+
+            // Insert at sorted location
             self.tiles.splice(i, 0, newTile);
+        } 
     }
 
     /**

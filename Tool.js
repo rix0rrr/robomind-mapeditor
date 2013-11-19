@@ -12,21 +12,22 @@ function Tool(id, options) {
 
     self.id       = id;
     self.layer    = options.layer || 0;
-    self.shadow   = options.shadow || false;
-    self.fileName = options.fileName || ('tile-' + self.id);
     self.xsize    = options.w || 1;
     self.ysize    = options.h || 1;
-    self.bgWidth  = options.textureTiles || self.xsize;   
-    self.bgHeight = options.bgH || self.ysize;   
+    var shadow    = options.shadow || false;
+    var fileName  = options.fileName || ('tile-' + self.id);
+    var bgWidth   = options.textureTiles || self.xsize;   
+    var bgHeight  = options.bgH || self.ysize;   
+    var shareLoc  = options.shareLoc || [];
 
-    var textureToTile = (self.shadow ? 225 : 200) / 200;
+    var textureToTile = (shadow ? 225 : 200) / 200;
 
     var to3DLocation = function(loc2d) {
         return $V([ loc2d.e(1), loc2d.e(2), self.layer ]);
     }
 
     self.click = function(map, loc) {
-        map.addOrReplaceTile(self.toTile(map, loc));
+        map.addOrReplaceTile(self.toTile(map, loc), shareLoc);
     }
 
     self.toTile = function(map, loc) {
@@ -40,13 +41,13 @@ function Tool(id, options) {
     }
 
     self.bgImage = function(skin) {
-        return skin.file(self.fileName + '.png');
+        return skin.file(fileName + '.png');
     }
 
     self.image = function(skin, size, shadow) {
         return {
             background: 'url(' + self.bgImage(skin) + ')',
-            'background-size': calcSize(size, self.bgWidth, true) + 'px ' + calcSize(size, self.bgHeight, true) + 'px',
+            'background-size': calcSize(size, bgWidth, true) + 'px ' + calcSize(size, bgHeight, true) + 'px',
             'width':  calcSize(size, self.xsize, shadow) + 'px',
             'height': calcSize(size, self.ysize, shadow) + 'px'
         }
