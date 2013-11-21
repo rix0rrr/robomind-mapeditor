@@ -45,16 +45,9 @@ function Editor(map, palette, skin) {
     }
 
     self.zoomIn = function() {
-        console.log('BEFORE ZOOM');
-        console.log('topLeft', self.topLeft().elements);
-        console.log('editorCenterReal', editorCenter().elements);
         var cp = centerPoint();
-        console.log('centerpoint', cp.elements);
         self.zoomFactor(self.zoomFactor() * 1.2);
-        console.log('AFTER ZOOM');
         self.centerOn(cp);
-        console.log('topleft', self.topLeft().elements);
-        console.log('centerpoint', centerPoint().elements);
     }
 
     self.zoomOut = function() {
