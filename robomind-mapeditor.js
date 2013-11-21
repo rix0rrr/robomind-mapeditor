@@ -47,12 +47,12 @@ $(function() {
             d += e.deltaY * e.deltaFactor;
 
             while (d < -ZoomThreshold) {
-                app.editor.zoomIn();
+                app.editor.zoomOut();
                 d += ZoomThreshold;
             }
 
             while (d > ZoomThreshold) {
-                app.editor.zoomOut();
+                app.editor.zoomIn();
                 d -= ZoomThreshold;
             }
 
