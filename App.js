@@ -41,7 +41,7 @@ function App() {
 
     $('.editor').mousedown(function(e) {
         var btn = $(e.target).closest('button');
-        if (btn.length) return;
+        if (btn.length) return; // Ignore click if it was on a button
 
         var mouseAction = e.which == 1 ? self.leftMouseFunction() : self.rightMouseFunction();
         currentAction = mouseActions[mouseAction];
@@ -49,6 +49,8 @@ function App() {
         currentAction.mouseDown(mouseLocation(e));
 
         e.preventDefault();
+        return false;
+    }).on('contextmenu', function(e) {
         return false;
     });
 
