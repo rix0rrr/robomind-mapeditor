@@ -2,7 +2,7 @@ function Editor(map, palette, skin) {
     var self = this;
 
     var unscaledTileSize = 200;
-    var nativeBgSize   = 1024;
+    var nativeBgSize     = 1024;
     var extraBackgroundZoom = 2;
 
     self.zoomFactor   = ko.observable(0.2);
@@ -29,12 +29,38 @@ function Editor(map, palette, skin) {
         });
     });
 
+    var editorCenter = function() {
+        var e = $('.editor');
+        return $V([ e.width(), e.height() ]).x(1/2);
+    }
+
+    var centerPoint = function() {
+        return viewportToVirtual(editorCenter());
+    }
+
+    self.centerOn = function(loc) {
+        var curCenter = centerPoint();
+
+        self.topLeft( self.topLeft().add( loc.subtract(curCenter).x(self.zoomFactor()) ) );
+    }
+
     self.zoomIn = function() {
+        console.log('BEFORE ZOOM');
+        console.log('topLeft', self.topLeft().elements);
+        console.log('editorCenterReal', editorCenter().elements);
+        var cp = centerPoint();
+        console.log('centerpoint', cp.elements);
         self.zoomFactor(self.zoomFactor() * 1.2);
+        console.log('AFTER ZOOM');
+        self.centerOn(cp);
+        console.log('topleft', self.topLeft().elements);
+        console.log('centerpoint', centerPoint().elements);
     }
 
     self.zoomOut = function() {
+        var cp = centerPoint();
         self.zoomFactor(self.zoomFactor() / 1.2);
+        self.centerOn(cp);
     }
 
     self.tileSize = function() {
@@ -52,14 +78,22 @@ function Editor(map, palette, skin) {
 
             return { cssStyle: mkCss(css) };
         });
-
     });
+
+    var viewportToVirtual = function(px) {
+        return px.add(self.topLeft()).multiply(1 / self.zoomFactor());
+    }
+
+    var virtualToViewport = function(px) {
+        return px.multiply(self.zoomFactor()).subtract(self.topLeft());
+    }
 
     /**
      * Translate editor pixel coordinates to a tile index
      */
     self.pixelToTile = function(px) {
-        var unscaledPx = px.add(self.topLeft()).multiply(1 / self.zoomFactor());
+        var unscaledPx = viewportToVirtual(px);
+        console.log('unscaledPx', unscaledPx.elements);
         return $V([ 
                 Math.floor(unscaledPx.e(1) / unscaledTileSize),
                 Math.floor(unscaledPx.e(2) / unscaledTileSize)
@@ -74,8 +108,8 @@ function Editor(map, palette, skin) {
                 loc.e(1) * unscaledTileSize,
                 loc.e(2) * unscaledTileSize
                 ]);
-        var r = unscaledPx.multiply(self.zoomFactor());
-        if (!inInner) r = r.subtract(self.topLeft());
+        var r = virtualToViewport(unscaledPx);
+        if (inInner) r = r.add(self.topLeft()); // We subtracted topLeft which we shouldn't have
         return r;
     }
 }
