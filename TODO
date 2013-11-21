@@ -5,6 +5,7 @@ EDITOR
     - Make editor fill screen vertically
     - Put sharing in popup
     - Add undo
+    - Edit operations like move, cut & paste
     
 GRAPHICS
     - Obtain LEGO tiles
