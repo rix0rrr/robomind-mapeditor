@@ -4,6 +4,7 @@ EDITOR
     - Make editing faster
     - Make editor fill screen vertically
     - Put sharing in popup
+    - Add undo
     
 GRAPHICS
     - Obtain LEGO tiles
