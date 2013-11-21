@@ -1,8 +1,9 @@
 EDITOR
     - Zoom in the middle of the map
     - Translucent tool preview 
-    - Compensate for jumpy mouse by drawing lines in MouseMove
     - Make editing faster
+    - Make editor fill screen vertically
+    - Put sharing in popup
     
 GRAPHICS
     - Obtain LEGO tiles
