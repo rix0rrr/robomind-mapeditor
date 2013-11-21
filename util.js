@@ -27,3 +27,28 @@ function sortedIndex(list, newValue, comparator) {
 
     return a;
 }
+
+/**
+ * Invoke a function for every tile on a line between two points
+ */
+function tileLine(start, end, tileSize, fn) {
+    var delta = end.subtract(start);
+
+    var dX = delta.e(1), dY = delta.e(2);
+    var adX = Math.abs(dX);
+    var adY = Math.abs(dY);
+
+    if (adX <= 0.0001 && adY <= 0.0001) return;
+
+    if (adX > adY) {
+        var alpha = dY / dX;
+        for (var x = 0; x <= adX; x += tileSize) {
+            fn(start.add($V([ x, x * alpha ])));
+        }
+    } else {
+        var alpha = dX / dY;
+        for (var y = 0; y <= adY; y += tileSize) {
+            fn(start.add($V([ y * alpha, y ])));
+        }
+    }
+}

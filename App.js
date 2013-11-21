@@ -59,7 +59,7 @@ function App() {
         if (!currentAction) return;
         currentAction = null;
     });
-
+    //--------------------------------------------------------------
     $(self.mapFile).on('loaded', function() {
         self.editor.topLeft($V([0, 0]));
         self.toEdit();
@@ -90,22 +90,25 @@ function App() {
  * Paint using the tool from the palette
  */
 function PaintAction(palette, map, editor) {
-    this.mouseDown = function(loc) {
+    var lastPxLoc;
+
+    this.mouseDown = function(pxLoc) {
         var tool = palette.selectedTool();
         if (!tool) return;
 
-        var tileLoc = editor.pixelToTile(loc);
-
-        tool.click(map, tileLoc);
+        lastPxLoc = pxLoc;
+        tool.click(map, editor.pixelToTile(pxLoc));
     }
 
-    this.mouseMove = function(loc) {
+    this.mouseMove = function(pxLoc) {
         var tool = palette.selectedTool();
         if (!tool) return;
 
-        var tileLoc = editor.pixelToTile(loc);
+        tileLine(lastPxLoc, pxLoc, editor.tileSize(), function(loc) {
+            tool.click(map, editor.pixelToTile(loc));
+        });
 
-        tool.click(map, tileLoc);
+        lastPxLoc = pxLoc;
     }
 }
 

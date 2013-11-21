@@ -35,12 +35,15 @@ function Editor(map, palette, skin) {
         self.zoomFactor(self.zoomFactor() / 1.2);
     }
 
+    self.tileSize = function() {
+        return unscaledTileSize * self.zoomFactor();
+    }
+
     self.mapTiles = ko.computed(function() {
         return _(map.tiles()).map(function(tile) {
-            var size = unscaledTileSize * self.zoomFactor();
             var pxLoc = self.tileToPixel(tile.loc, true);
 
-            var css = tile.tool.image(skin, size, true);
+            var css = tile.tool.image(skin, self.tileSize(), true);
             css.position = 'absolute';
             css['left'] = pxLoc.e(1) + 'px';
             css['top']  = pxLoc.e(2) + 'px';
