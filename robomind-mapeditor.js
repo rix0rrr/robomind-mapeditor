@@ -37,6 +37,30 @@ $(function() {
 
     app.mapFile.setFileControl(document.getElementById('loadMapFile'));
 
+    //----------------------------------------------------------------------
+    // When mousewheel scroll distance exceeds a given distance, zoom
+    (function() {
+        var ZoomThreshold = 100;
+
+        var d = 0;
+        $('.editor').mousewheel(function(e) {
+            d += e.deltaY * e.deltaFactor;
+
+            while (d < -ZoomThreshold) {
+                app.editor.zoomIn();
+                d += ZoomThreshold;
+            }
+
+            while (d > ZoomThreshold) {
+                app.editor.zoomOut();
+                d -= ZoomThreshold;
+            }
+
+            return false;
+        });
+    }());
+
+    //----------------------------------------------------------------------
     // Load from hash fragment
     var loadState = function() {
         var h = window.location.hash.substr(1);

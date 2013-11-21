@@ -22,6 +22,7 @@
       "base64": "0.2.x",
       "LZMA-JS": "1.2.x",
       "sylvester": "0.1.x",
-      "font-awesome": "4.x.x"
+      "font-awesome": "4.x.x",
+      "jquery-mousewheel": "3.x.x"
   }
 }
