@@ -64,10 +64,7 @@ $(function() {
     // Resize editor to fix screen vertically
     (function() {
         var update = function() {
-            var editor = $('.editor');
-            editor.css({
-                height: $(window).height() - editor.offset().top - 20
-            });
+            app.editor.editorHeight($(window).height() - $('.editor').offset().top - 20);
         }
 
         $(window).on('resize', update);

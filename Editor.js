@@ -5,13 +5,15 @@ function Editor(map, palette, skin) {
     var nativeBgSize   = 1024;
     var extraBackgroundZoom = 2;
 
-    self.zoomFactor = ko.observable(0.2);
-    self.topLeft    = ko.observable($V([0, 0])); // After scaling
+    self.zoomFactor   = ko.observable(0.2);
+    self.topLeft      = ko.observable($V([0, 0])); // After scaling
+    self.editorHeight = ko.observable(500);
 
     self.outerCssStyle = ko.computed(function() {
         return mkCss({
             position: 'relative',
             overflow: 'hidden',
+            height: self.editorHeight() + 'px',
             background: 'url(' + skin.file('bg.png') + ')',
             'background-size': (nativeBgSize * self.zoomFactor() * extraBackgroundZoom) + 'px',
             'background-position': -self.topLeft().e(1) + 'px ' + -self.topLeft().e(2) + 'px'
