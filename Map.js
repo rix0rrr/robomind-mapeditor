@@ -17,7 +17,7 @@ function Map() {
         else {
             var j = i;
             // Remove tiles at those locations, unless they are allowed
-            while (self.tiles()[j].hasLoc(newTile.loc) && j < self.tiles().length) {
+            while (j < self.tiles().length && self.tiles()[j].hasLoc(newTile.loc)) {
                 if (self.tiles()[j].id == newTile.id) return; // Already there
                 if (!_(allowTileIds).contains(self.tiles()[j].id))
                     self.tiles.splice(j, 1); // Delete
