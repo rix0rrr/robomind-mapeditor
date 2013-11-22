@@ -49,39 +49,43 @@ function Map() {
     var minCol = function() { return _.chain(self.tiles()).invoke('col').min().value(); }
     var maxCol = function() { return _.chain(self.tiles()).invoke('col').max().value(); }
 
-    /**
-     * Get tiles in a sparse array
-     */
-    self.getTiles2D = function(layer) {
-        var ret = [];
-        var row = [];
-        var lastTile;
-
-        _(self.tiles()).each(function(tile) {
-            if (!tile.onLayer(layer)) return;
-
-            if (!lastTile || tile.row() == lastTile.row()) {
-                if (lastTile) 
-                    for (var i = lastTile.col() + 1; i < tile.col(); i++)
-                        row.push(null);
-                row.push(tile);
-            } else {
-                for (var i = lastTile.row() + 1; i < tile.row(); i++)
-                    ret.push([]);
-                ret.push(row);
-                row = [tile];
-            }
-            lastTile = tile;
-        });
-        if (row.length) ret.push(row)
-
-        return ret;
-    }
-
     self.getTiles = function(layer) {
         return _(self.tiles()).filter(function(tile) {
             return tile.onLayer(layer);
         });
+    }
+
+    /**
+     * Get tiles in a sparse array
+     */
+    self.getTiles2D = function(layer) {
+        var layerTiles = self.getTiles(layer);
+        if (layerTiles.length == 0) return [];
+
+        var minCol = _(layerTiles).min(function(tile) { return tile.col(); }).col();
+        var minRow = _(layerTiles).min(function(tile) { return tile.row(); }).row();
+        var maxRow = _(layerTiles).max(function(tile) { return tile.row(); }).row();
+        var rows   = _(layerTiles).groupBy(function(tile) { return tile.row(); });
+
+        var ret = [];
+        for (var y = minRow; y <= maxRow; y++) {
+            var row = [];
+
+            if (rows[y] !== undefined) {
+                var lastCol = minCol;
+                _(rows[y]).each(function(tile) {
+                    while (lastCol < tile.col()) {
+                        row.push(null);
+                        lastCol++;
+                    }
+                    row.push(tile);
+                });
+            }
+
+            ret.push(row);
+        }
+
+        return ret;
     }
 
     /**
@@ -91,12 +95,13 @@ function Map() {
         var mapTiles = self.getTiles(TileLayer);
         if (mapTiles.length == 0) return $V([ 0, 0 ]);
 
-        var r = mapTiles[0].loc;
+        var x = mapTiles[0].loc.e(1);
+        var y = mapTiles[0].loc.e(2);
+
         _(mapTiles).each(function(tile) {
-            if ((tile.loc.e(2) < r.e(2)) || 
-                (tile.loc.e(2) == r.e(2) && tile.loc.e(1) < r.e(1))) 
-                r = tile.loc;
+            if (tile.loc.e(1) < x) x = tile.loc.e(1);
+            if (tile.loc.e(2) < y) y = tile.loc.e(2);
         });
-        return r;
+        return $V([ x, y ]);
     }
 }

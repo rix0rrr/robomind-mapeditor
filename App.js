@@ -27,6 +27,28 @@ function App() {
     self.editor  = new Editor(self.map, self.palette, self.skin);
     self.mapFile = new MapFile(self.map, self.palette);
 
+    (function() {
+        var undoStack = ko.observableArray();
+        var currentState;
+
+        self.canUndo = ko.computed(function() {
+            return undoStack().length > 0;
+        });
+
+        self.undo = function() {
+            var r = undoStack.pop();
+            if (r) self.mapFile.setMapFrom(r);
+        }
+
+        self.prepareUndo = function() {
+            currentState = self.mapFile.mapToText();
+        }
+
+        self.pushUndo = function() {
+            undoStack.push(currentState);
+        }
+    }());
+
     var mouseActions = {
         paint: new PaintAction(self.palette, self.map, self.editor),
         pan: new PanAction(self.editor)
@@ -46,6 +68,8 @@ function App() {
         var mouseAction = e.which == 1 ? self.leftMouseFunction() : self.rightMouseFunction();
         currentAction = mouseActions[mouseAction];
 
+        self.prepareUndo();
+
         currentAction.mouseDown(mouseLocation(e));
 
         e.preventDefault();
@@ -60,6 +84,7 @@ function App() {
     }).mouseup(function(e) {
         if (!currentAction) return;
         currentAction = null;
+        self.pushUndo();
     });
     //--------------------------------------------------------------
     $(self.mapFile).on('loaded', function() {

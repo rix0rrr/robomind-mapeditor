@@ -42,11 +42,11 @@ function MapFile(map, palette) {
      * Save current map representation to the saveRepresentation observable
      */
     self.save = function() {
-        self.saveRepresentation(mapToText());
+        self.saveRepresentation(self.mapToText());
         self.saveRepresentationEncoded(encodeURIComponent(self.saveRepresentation()));
     }
 
-    var mapToText = function() {
+    self.mapToText = function() {
         var ret = [];
 
         var tl = map.topLeft2D().to3D();
@@ -76,7 +76,7 @@ function MapFile(map, palette) {
         return ret.join('\n');
     }
 
-    self.load = function(text) {
+    self.setMapFrom = function(text) {
         var lines = text.split('\n');
         var newTiles = [];
 
@@ -120,6 +120,10 @@ function MapFile(map, palette) {
         });
 
         map.replaceTiles(newTiles);
+    }
+
+    self.load = function(text) {
+        self.setMapFrom(text);
         $(self).trigger('loaded');
     }
 
@@ -173,7 +177,7 @@ function MapFile(map, palette) {
 
     self.prepareShareURL = function() {
         self.shareURL('');
-        lzma.compress(mapToText(), 1, function(compressed) {
+        lzma.compress(self.mapToText(), 1, function(compressed) {
             var blob = btoa(arrayToStr(compressed));
             self.shareURL(baseUrl() + '#' + blob);
         });

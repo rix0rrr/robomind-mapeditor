@@ -86,7 +86,6 @@ function Editor(map, palette, skin) {
      */
     self.pixelToTile = function(px) {
         var unscaledPx = viewportToVirtual(px);
-        console.log('unscaledPx', unscaledPx.elements);
         return $V([ 
                 Math.floor(unscaledPx.e(1) / unscaledTileSize),
                 Math.floor(unscaledPx.e(2) / unscaledTileSize)
