@@ -72,12 +72,13 @@ function Map() {
             var row = [];
 
             if (rows[y] !== undefined) {
-                var lastCol = minCol;
+                var lastCol = minCol - 1;
                 _(rows[y]).each(function(tile) {
-                    while (lastCol < tile.col()) {
+                    while (lastCol < tile.col() - 1) {
                         row.push(null);
                         lastCol++;
                     }
+                    lastCol = tile.col();
                     row.push(tile);
                 });
             }
