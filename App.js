@@ -37,11 +37,13 @@ function App() {
 
         self.undo = function() {
             var r = undoStack.pop();
-            if (r) self.mapFile.setMapFrom(r);
+            if (r) {
+                self.mapFile.setMapFrom(r[1], r[0]);
+            }
         }
 
         self.prepareUndo = function() {
-            currentState = self.mapFile.mapToText();
+            currentState = [self.map.topLeft2D(), self.mapFile.mapToText()];
         }
 
         self.pushUndo = function() {

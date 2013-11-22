@@ -76,14 +76,20 @@ function MapFile(map, palette) {
         return ret.join('\n');
     }
 
-    self.setMapFrom = function(text) {
+    /**
+     * Load a map from text
+     *
+     * Add additional topleft offset
+     */
+    self.setMapFrom = function(text, topLeft) {
+        topLeft = topLeft || $V([ 0, 0 ]);
         var lines = text.split('\n');
         var newTiles = [];
 
         var placeTool = function(id, x, y) {
             //console.log('Placing', id, 'at', x, ',', y);
             var tool = palette.tool(id);
-            if (tool) newTiles.push(tool.toTile(map, $V([ x, y ])));
+            if (tool) newTiles.push(tool.toTile(map, $V([ x, y ]).add(topLeft)));
         }
 
         // Load regular map tiles
