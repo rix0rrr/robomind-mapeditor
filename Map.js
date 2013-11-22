@@ -83,4 +83,20 @@ function Map() {
             return tile.onLayer(layer);
         });
     }
+
+    /**
+     * Return the most topleft coordinate of the tile layer
+     */
+    self.topLeft2D = function() {
+        var mapTiles = self.getTiles(TileLayer);
+        if (mapTiles.length == 0) return $V([ 0, 0 ]);
+
+        var r = mapTiles[0].loc;
+        _(mapTiles).each(function(tile) {
+            if ((tile.loc.e(2) < r.e(2)) || 
+                (tile.loc.e(2) == r.e(2) && tile.loc.e(1) < r.e(1))) 
+                r = tile.loc;
+        });
+        return r;
+    }
 }

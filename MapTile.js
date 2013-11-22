@@ -18,9 +18,7 @@ MapTile.prototype.row = function() {
     return this.loc.e(2);
 }
 MapTile.prototype.mapSymbol = function() {
-    if (this.id.match(/^tile-/))
-        return this.id.substr(5);
-    return '?';
+    return this.id;
 }
 MapTile.prototype.hasLoc = function(loc) {
     if (loc.dimensions() == 3) {

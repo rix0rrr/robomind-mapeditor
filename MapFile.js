@@ -49,17 +49,21 @@ function MapFile(map, palette) {
     var mapToText = function() {
         var ret = [];
 
+        var tl = map.topLeft2D().to3D();
+
         ret.push('# This file was saved at ' + new Date());
         ret.push('# from ' + baseUrl());
         ret.push('');
         ret.push('extra:');
         ret = ret.concat(_(map.getTiles(ExtraLayer)).map(function(tile) {
-            return tile.tool.id + '@' + tile.loc.e(1) + ',' + tile.loc.e(2);
+            var relLoc = tile.loc.subtract(tl);
+            return tile.tool.id + '@' + relLoc.e(1) + ',' + relLoc.e(2);
         }));
         ret.push('');
         ret.push('paint:');
         ret = ret.concat(_(map.getTiles(PaintLayer)).map(function(tile) {
-            return '(' + tile.id.substr(0, 1) + ',' + tile.id.substr(1, 1) + ',' + tile.loc.e(1) + ',' + tile.loc.e(2) + ')';
+            var relLoc = tile.loc.subtract(tl);
+            return '(' + tile.id.substr(0, 1) + ',' + tile.id.substr(1, 1) + ',' + relLoc.e(1) + ',' + relLoc.e(2) + ')';
         }));
         ret.push('');
         ret.push('map:');
