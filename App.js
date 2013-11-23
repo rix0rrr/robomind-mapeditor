@@ -61,6 +61,7 @@ function App() {
         return $V([ e.pageX - ofs.left, e.pageY - ofs.top ]);
     }
 
+    var dragging = ko.observable(false);
     var currentAction;
 
     $('.editor').mousedown(function(e) {
@@ -73,6 +74,7 @@ function App() {
         self.prepareUndo();
 
         currentAction.mouseDown(mouseLocation(e));
+        dragging(true);
 
         e.preventDefault();
         return false;
@@ -86,8 +88,42 @@ function App() {
     }).mouseup(function(e) {
         if (!currentAction) return;
         currentAction = null;
+        dragging(false);
         self.pushUndo();
     });
+
+    //--------------------------------------------------------------
+    // PAINT PREVIEW
+    (function() {
+        var hoverTile     = ko.observable($V([0, 0]));
+        var mouseOnEditor = ko.observable(false);
+
+        var visible = ko.computed(function() {
+            return mouseOnEditor() && self.leftMouseFunction() == 'paint' && !dragging();
+        });
+
+        self.paintPreview = {
+            cssStyle: ko.computed(function() {
+                var tool = self.palette.selectedTool();
+                if (!tool) return "display: none;";
+
+                var pxLoc = self.editor.tileToPixel(hoverTile());
+
+                return mkCss(_(tool.image(self.skin, self.editor.tileSize(), true)).extend({
+                    display: visible() ? 'block' : 'none',
+                    position: 'absolute',
+                    left: pxLoc.e(1) + 'px',
+                    top: pxLoc.e(2) + 'px'
+                }));
+            })
+        }
+
+        $('.editor').mousemove(function(e) {
+            hoverTile(self.editor.pixelToTile(mouseLocation(e)));
+        }).hover(function() { mouseOnEditor(true); },
+                 function() { mouseOnEditor(false); });
+    }());
+    
     //--------------------------------------------------------------
     $(self.mapFile).on('loaded', function() {
         self.editor.topLeft($V([0, 0]));
