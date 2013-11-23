@@ -87,7 +87,6 @@ function MapFile(map, palette) {
         var newTiles = [];
 
         var placeTool = function(id, x, y) {
-            //console.log('Placing', id, 'at', x, ',', y);
             var tool = palette.tool(id);
             if (tool) newTiles.push(tool.toTile(map, $V([ x, y ]).add(topLeft)));
         }
