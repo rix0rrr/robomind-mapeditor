@@ -60,17 +60,15 @@ function Editor(map, palette, skin) {
         return unscaledTileSize * self.zoomFactor();
     }
 
-    self.mapTiles = ko.computed(function() {
-        return _(map.tiles()).map(function(tile) {
-            var pxLoc = self.tileToPixel(tile.loc, true);
+    self.mapTiles = projectedArray(map.tiles, function(tile) {
+        var pxLoc = self.tileToPixel(tile.loc, true);
 
-            var css = tile.tool.image(skin, self.tileSize(), true);
-            css.position = 'absolute';
-            css['left'] = pxLoc.e(1) + 'px';
-            css['top']  = pxLoc.e(2) + 'px';
+        var css = tile.tool.image(skin, self.tileSize(), true);
+        css.position = 'absolute';
+        css['left'] = pxLoc.e(1) + 'px';
+        css['top']  = pxLoc.e(2) + 'px';
 
-            return { cssStyle: mkCss(css) };
-        });
+        return { cssStyle: mkCss(css) };
     });
 
     var viewportToVirtual = function(px) {

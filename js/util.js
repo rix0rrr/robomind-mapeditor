@@ -52,3 +52,28 @@ function tileLine(start, end, tileSize, fn) {
         }
     }
 }
+
+/**
+ * Return an observable array that is a copy of the original observable array,
+ * but with each element mapped using a mapping function
+ */
+function projectedArray(source, fn) {
+    var copy   = ko.observableArray(_.clone(source())); // Used to detect changes
+    var target = ko.observableArray(_(copy()).map(fn)); // Mapped version of changes
+
+    source.subscribe(function() {
+        // Original array changed
+        _(ko.utils.compareArrays(copy(), source())).each(function(x) {
+            if (x.status == 'added') {
+                copy.splice(x.index, 0, x.value);
+                target.splice(x.index, 0, fn(x.value));
+            }
+            if (x.status == 'deleted') {
+                copy.splice(x.index, 1);
+                target.splice(x.index, 1);
+            }
+        });
+    });
+
+    return target;
+}
