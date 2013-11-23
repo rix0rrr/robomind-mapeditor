@@ -15,6 +15,11 @@ function App() {
         return 'skins/' + self.skin().value + '/' + filename;
     }
 
+    self.selectSkinByName = function(skinName) {
+        var s = _(self.skins()).find(function(skin) { return skin.value == skinName; });
+        if (s) self.skin(s);
+    }
+
     //--------------------------------------------------------------
     // ACTIONS
     self.leftMouseFunction  = ko.observable('paint');

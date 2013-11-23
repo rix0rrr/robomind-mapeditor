@@ -72,6 +72,17 @@ $(function() {
     }());
 
     //----------------------------------------------------------------------
+    // Retain theme choice in localstorage
+    if (window.localStorage) {
+        var s = localStorage.getItem('skin');
+        if (s) app.selectSkinByName(s);
+
+        app.skin.subscribe(function(skin) {
+            localStorage.setItem('skin', skin.value);
+        });
+    }
+
+    //----------------------------------------------------------------------
     // Load from hash fragment
     var loadState = function() {
         var h = window.location.hash.substr(1);
