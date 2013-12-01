@@ -4,6 +4,7 @@ function Editor(map, palette, skin) {
     var unscaledTileSize = 200;
     var nativeBgSize     = 1024;
     var extraBackgroundZoom = 2;
+    var zoomRange           = [0.08, 0.8];
 
     self.zoomFactor   = ko.observable(0.2);
     self.topLeft      = ko.observable($V([0, 0])); // After scaling
@@ -46,13 +47,13 @@ function Editor(map, palette, skin) {
 
     self.zoomIn = function() {
         var cp = centerPoint();
-        self.zoomFactor(self.zoomFactor() * 1.2);
+        self.zoomFactor(Math.min(self.zoomFactor() * 1.2, zoomRange[1]));
         self.centerOn(cp);
     }
 
     self.zoomOut = function() {
         var cp = centerPoint();
-        self.zoomFactor(self.zoomFactor() / 1.2);
+        self.zoomFactor(Math.max(self.zoomFactor() / 1.2, zoomRange[0]));
         self.centerOn(cp);
     }
 
