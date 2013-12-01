@@ -62,14 +62,14 @@ function Editor(map, palette, skin) {
     }
 
     self.mapTiles = projectedArray(map.tiles, function(tile) {
-        var pxLoc = self.tileToPixel(tile.loc, true);
-
-        var css = tile.tool.image(skin, self.tileSize(), true);
-        css.position = 'absolute';
-        css['left'] = pxLoc.e(1) + 'px';
-        css['top']  = pxLoc.e(2) + 'px';
-
-        return { cssStyle: mkCss(css) };
+        return { cssStyle: ko.computed(function() {
+            var pxLoc = self.tileToPixel(tile.loc, true);
+            var css = tile.tool.image(skin, self.tileSize(), true);
+            css.position = 'absolute';
+            css['left'] = pxLoc.e(1) + 'px';
+            css['top']  = pxLoc.e(2) + 'px';
+            return mkCss(css);
+        })};
     });
 
     var viewportToVirtual = function(px) {
