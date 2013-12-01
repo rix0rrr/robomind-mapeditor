@@ -23,6 +23,7 @@
       "LZMA-JS": "1.2.x",
       "sylvester": "0.1.x",
       "font-awesome": "4.x.x",
-      "jquery-mousewheel": "3.x.x"
+      "jquery-mousewheel": "3.x.x",
+      "qunit": "1.x.x"
   }
 }
