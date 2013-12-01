@@ -97,6 +97,14 @@ textarea { font-family: Consolas, Monaco, monospace; }
 
 .paint-preview { opacity: 0.5; }
 
+.masthead, .masthead a {
+    color: #A39A67;
+    font-size: 10px;
+    text-align: center;
+    margin-top: -8px;
+}
+.masthead a { text-decoration: underline; }
+
 /*----------------------- FACEBOOK BUTTON ----------------------*/
 .btn-facebook {
   background-color: #246ec4;
